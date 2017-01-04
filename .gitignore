@@ -1,0 +1,5 @@
+#leancloud
+.leancloud/
+
+# wechat config
+config/wechat.js
