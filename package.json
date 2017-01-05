@@ -12,6 +12,9 @@
     "express",
     "Weixin"
   ],
+  "engines":{
+     "node": ">=4.1"
+  },
   "license": "MIT",
   "dependencies": {
     "body-parser": "1.12.3",

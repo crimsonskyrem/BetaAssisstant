@@ -3,11 +3,13 @@ var AV = require('leanengine');
 exports.deal = function(usr,content,cb) {
     var msg = String(content);
     if(msg.match(/^:?[hH](elp)?$/)){
+	var usrurl = "http://sven.leanapp.cn/"+usr;
         var reply =  "命令列表:\n\n\
         h or help : 显示此条帮助信息;\n\n\
         c or check : 查询备忘, 例：':c 1';\n\n\
         m or memo : 添加一个备忘,例：':m 备忘内容';\n\n\
-        输入命令请使用半角英文，命令与内容之间使用空格连接";
+        输入命令请使用半角英文，命令与内容之间使用空格连接\n\n\
+	      要查看您的备忘，请单击下面的链接：\n\n"+usrurl;
         cb(reply);
         return;
     }
@@ -86,6 +88,6 @@ function commandblk(usr,msg,cb){
 }
 
 function chatblk(usr,msg,cb) {
-    var reply = "this is chatblk and your msg is "+ msg;
+    var reply = "this test and your msg is "+ msg;
     cb(reply);
 }

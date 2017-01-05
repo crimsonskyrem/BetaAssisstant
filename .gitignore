@@ -1,5 +1,10 @@
 #leancloud
 .leancloud/
+.leanignore
 
 # wechat config
 config/wechat.js
+
+#npm
+node_modules/
+npm-debug.log

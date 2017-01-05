@@ -51,7 +51,7 @@ app.get('/', function(req, res) {
   });
 });
 
-app.get('/[A-z0-9]{4}/', function(req, res) {
+app.get('/[A-z0-9]{28}/', function(req, res) {
   res.render('index', {
     currentTime: req.path.replace('/','')
   });
