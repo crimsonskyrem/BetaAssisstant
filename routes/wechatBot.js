@@ -5,11 +5,11 @@ var config = require('../config/wechat.js');
 var WechatAPI = require('wechat-api');
 var api = new WechatAPI(config.appid,
   config.secretKey);
-var sven = require('./sven');
+var sven = require('./beta');
 
 router.use('/', wechat('sdo57suhwrf45dcskcjhv2aergSDf').text(function(message, req, res, next) {
     var msg = req.weixin;
-    sven.deal(msg.FromUserName,msg.Content,function(txt){
+    beta.deal(msg.FromUserName,msg.Content,function(txt){
         res.reply(txt);
     });
 }).image(function(message, req, res, next) {
