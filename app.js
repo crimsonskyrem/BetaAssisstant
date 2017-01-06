@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var wechat = require('./routes/wechatBot');
 var cloud = require('./cloud');
+var memo = require('./routes/memo');
 
 var app = express();
 
@@ -52,9 +53,11 @@ app.get('/', function(req, res) {
 });
 
 app.get('/[A-z0-9]{28}/', function(req, res) {
-  res.render('index', {
-    currentTime: req.path.replace('/','')
-  });
+    memo.show(req.path.replace('/',''),function(arr){
+        res.render('memo', {
+            data: arr
+        });
+    });
 });
 
 // 可以将一类的路由单独保存在一个文件中
