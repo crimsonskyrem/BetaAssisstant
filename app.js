@@ -12,7 +12,8 @@ var app = express();
 
 // 设置 view 引擎
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
 //app.use(express.static('public'));
 
 // 加载云代码方法
@@ -46,19 +47,15 @@ app.use(function(req, res, next) {
   d.run(next);
 });
 
-app.get('/', function(req, res) {
-  res.render('index', {
-    currentTime: new Date()
-  });
-});
+app.get('/', require('./routes').index);
 
-app.get('/[A-z0-9]{28}/', function(req, res) {
-    memo.show(req.path.replace('/',''),function(arr){
-        res.render('memo', {
-            data: arr
-        });
-    });
-});
+//app.get('/[A-z0-9]{28}/', function(req, res) {
+//    memo.show(req.path.replace('/',''),function(arr){
+//        res.render('memo', {
+//            data: arr
+//        });
+//    });
+//});
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/wechat', wechat);
