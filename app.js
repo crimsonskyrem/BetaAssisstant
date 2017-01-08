@@ -49,13 +49,13 @@ app.use(function(req, res, next) {
 
 app.get('/', require('./routes').index);
 
-//app.get('/[A-z0-9]{28}/', function(req, res) {
+app.get('/[A-z0-9]{28}/', function(req, res) {
 //    memo.show(req.path.replace('/',''),function(arr){
-//        res.render('memo', {
-//            data: arr
-//        });
+        res.render('memo', {
+            data: 'test'
+        });
 //    });
-//});
+});
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/wechat', wechat);
