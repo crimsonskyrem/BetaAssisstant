@@ -49,13 +49,15 @@ app.use(function(req, res, next) {
 
 app.get('/', require('./routes').index);
 
-app.get('/[A-z0-9]{28}/', function(req, res) {
+//app.get('/[A-z0-9]{28}/', function(req, res) {
 //    memo.show(req.path.replace('/',''),function(arr){
-        res.render('memo', {
-            data: 'test'
-        });
+//        res.render('memo', {
+//            data: [req.path.replace('/','')]
+//        });
 //    });
-});
+//});
+
+app.get('/[A-z0-9]{28}/', require('./routes/memo').memo);
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/wechat', wechat);
@@ -90,7 +92,7 @@ app.use(function(err, req, res, next) { // jshint ignore:line
   res.status(err.status || 500);
   res.render('error', {
     message: err.message || err,
-    error: {}
+    error: ""
   });
 });
 
