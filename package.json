@@ -24,10 +24,15 @@
     "express-react-views": "^0.10.2",
     "leanengine": "^0.4.0",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "request": "^2.69.0",
     "strformat": "0.0.7",
     "wechat": "^2.0.3",
     "wechat-api": "^1.24.0"
+  },
+  "devDependencies": {
+    "amazeui-touch": "^1.0.0"
   }
 }
