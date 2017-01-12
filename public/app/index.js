@@ -1,16 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MyAwesomeReactComponent from './MyAwesomeReactComponent';
-import Main from './mytest';
-
-const App = () => (
-        <MuiThemeProvider>
-            <MyAwesomeReactComponent />
-        </MuiThemeProvider>
-);
+import IndexHello from './Components/IndexHello';
 
 ReactDOM.render(
-    <Main />,
+    <IndexHello />,
     document.getElementById('app')
 );

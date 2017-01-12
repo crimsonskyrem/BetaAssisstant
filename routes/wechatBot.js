@@ -5,7 +5,7 @@ var config = require('../config/wechat.js');
 var WechatAPI = require('wechat-api');
 var api = new WechatAPI(config.appid,
   config.secretKey);
-var sven = require('./beta');
+var beta = require('./beta');
 
 router.use('/', wechat('sdo57suhwrf45dcskcjhv2aergSDf').text(function(message, req, res, next) {
     var msg = req.weixin;
