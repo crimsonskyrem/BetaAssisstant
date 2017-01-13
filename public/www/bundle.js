@@ -60,11 +60,11 @@
 
 	var _IndexHello2 = _interopRequireDefault(_IndexHello);
 
-	var _NotFind = __webpack_require__(601);
+	var _NotFound = __webpack_require__(601);
 
-	var _NotFind2 = _interopRequireDefault(_NotFind);
+	var _NotFound2 = _interopRequireDefault(_NotFound);
 
-	var _Usr = __webpack_require__(603);
+	var _Usr = __webpack_require__(602);
 
 	var _Usr2 = _interopRequireDefault(_Usr);
 
@@ -75,7 +75,7 @@
 	    { history: _reactRouter.hashHistory },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _IndexHello2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '/usr/:id', component: _Usr2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _NotFind2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _NotFound2.default })
 	), document.getElementById('app'));
 
 /***/ },
@@ -66186,16 +66186,16 @@
 	    );
 	};
 
-	var NotFind = function (_Component) {
-	    _inherits(NotFind, _Component);
+	var NotFound = function (_Component) {
+	    _inherits(NotFound, _Component);
 
-	    function NotFind() {
-	        _classCallCheck(this, NotFind);
+	    function NotFound() {
+	        _classCallCheck(this, NotFound);
 
-	        return _possibleConstructorReturn(this, (NotFind.__proto__ || Object.getPrototypeOf(NotFind)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (NotFound.__proto__ || Object.getPrototypeOf(NotFound)).apply(this, arguments));
 	    }
 
-	    _createClass(NotFind, [{
+	    _createClass(NotFound, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -66215,14 +66215,13 @@
 	        }
 	    }]);
 
-	    return NotFind;
+	    return NotFound;
 	}(_react.Component);
 
-	exports.default = NotFind;
+	exports.default = NotFound;
 
 /***/ },
-/* 602 */,
-/* 603 */
+/* 602 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -66236,6 +66235,8 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _materialUi = __webpack_require__(234);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66262,27 +66263,71 @@
 	var Usr = function (_Component) {
 	    _inherits(Usr, _Component);
 
-	    function Usr() {
+	    function Usr(props) {
 	        _classCallCheck(this, Usr);
 
-	        return _possibleConstructorReturn(this, (Usr.__proto__ || Object.getPrototypeOf(Usr)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (Usr.__proto__ || Object.getPrototypeOf(Usr)).call(this, props));
+
+	        _this.state = { open: false };
+	        return _this;
 	    }
 
 	    _createClass(Usr, [{
+	        key: 'handleToggle',
+	        value: function handleToggle() {
+	            this.setState({ open: !this.state.open });
+	        }
+	    }, {
+	        key: 'handleClose',
+	        value: function handleClose() {
+	            this.setState({ open: false });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            return _react2.default.createElement(
-	                'div',
-	                { style: styles.main },
+	                _materialUi.MuiThemeProvider,
+	                null,
 	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    'this is usr page'
-	                ),
-	                _react2.default.createElement(
-	                    'h3',
-	                    null,
-	                    this.props.params.id
+	                    'div',
+	                    { style: styles.main },
+	                    _react2.default.createElement(_materialUi.RaisedButton, {
+	                        label: 'Open Drawer',
+	                        onTouchTap: this.handleToggle
+	                    }),
+	                    _react2.default.createElement(
+	                        _materialUi.Drawer,
+	                        {
+	                            docked: false,
+	                            width: 20,
+	                            open: this.state.open,
+	                            onRequestChange: function onRequestChange(open) {
+	                                return _this2.setState({ open: open });
+	                            }
+	                        },
+	                        _react2.default.createElement(
+	                            _materialUi.MenuItem,
+	                            null,
+	                            'Menu Item'
+	                        ),
+	                        _react2.default.createElement(
+	                            _materialUi.MenuItem,
+	                            null,
+	                            'Menu Item 2'
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        'this is usr page'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h3',
+	                        null,
+	                        this.props.params.id
+	                    )
 	                )
 	            );
 	        }
