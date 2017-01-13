@@ -41,8 +41,9 @@ class IndexHello extends Component{
                 <div style={styles.main}>
                     <h2>汪！你好瓦！</h2>
                     <PaperCircle />
-                    <h3>我是你的微信助理，贝塔！在聊天窗口回复h可以获得帮助哦～</h3>
-                    <h4>觉得还不错的话，请给个star吧～</h4>
+                    <h3>我是你的微信助理，贝塔！</h3>
+                    <h3>在聊天窗口回复h可以获得帮助汪呜～</h3>
+                    <h4>觉得还不错的话，请给个star嗷嗷～</h4>
                     <GitButton />
                 </div>
             </MuiThemeProvider>

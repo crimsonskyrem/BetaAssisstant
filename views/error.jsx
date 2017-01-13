@@ -4,7 +4,7 @@ class ErrMessage extends React.Component {
     render(){
         return (
             <div>
-                <h1>{this.props.message}</h1>
+                <h2>{this.props.message}</h2>
                 <span>{this.props.error}</span>
             </div>
         );

@@ -25,40 +25,36 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 
-// 未处理异常捕获 middleware
-app.use(function(req, res, next) {
-  var d = null;
-  if (process.domain) {
-    d = process.domain;
-  } else {
-    d = domain.create();
-  }
-  d.add(req);
-  d.add(res);
-  d.on('error', function(err) {
-    console.error('uncaughtException url=%s, msg=%s', req.url, err.stack ||
-      err.message || err);
-    if (!res.finished) {
-      res.statusCode = 500;
-      res.setHeader('content-type', 'application/json; charset=UTF-8');
-      res.end('uncaughtException');
-    }
-  });
-  d.run(next);
-});
-
-app.get('/', require('./routes').index);
-
-
-//app.get('/[A-z0-9]{28}/', function(req, res) {
-//    memo.show(req.path.replace('/',''),function(arr){
-//        res.render('memo', {
-//            data: [req.path.replace('/','')]
-//        });
-//    });
+//// 未处理异常捕获 middleware
+//app.use(function(req, res, next) {
+//  var d = null;
+//  if (process.domain) {
+//    d = process.domain;
+//  } else {
+//    d = domain.create();
+//  }
+//  d.add(req);
+//  d.add(res);
+//  d.on('error', function(err) {
+//    console.error('uncaughtException url=%s, msg=%s', req.url, err.stack ||
+//      err.message || err);
+//    if (!res.finished) {
+//      res.statusCode = 500;
+//      res.setHeader('content-type', 'application/json; charset=UTF-8');
+//      res.end('uncaughtException');
+//    }
+//  });
+//  d.run(next);
 //});
 
-app.get('/[A-z0-9]{28}/', require('./routes/memo').memo);
+//app.get('/', require('./routes').index);
+
+
+app.get('/[A-z0-9]{28}/', function(req, res) {
+    res.redirect('/#/usr/' + req.path.replace('/',''));
+});
+
+app.post('/[A-z0-9]{28}/', require('./routes/memo').memo);
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/wechat', wechat);
@@ -88,13 +84,9 @@ if (app.get('env') === 'development') {
   });
 }
 
-// 如果是非开发环境，则页面只输出简单的错误信息
+// 如果是非开发环境，则转到静态错误页面
 app.use(function(err, req, res, next) { // jshint ignore:line
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message || err,
-    error: ""
-  });
+    res.redirect('/#/err');
 });
 
 module.exports = app;
