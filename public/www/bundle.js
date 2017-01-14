@@ -66240,7 +66240,7 @@
 
 	var _Card = __webpack_require__(425);
 
-	var _add = __webpack_require__(603);
+	var _add = __webpack_require__(613);
 
 	var _add2 = _interopRequireDefault(_add);
 
@@ -66261,11 +66261,24 @@
 	        textAlign: 'center',
 	        display: 'block'
 	    },
+	    chip: {
+	        float: 'left',
+	        marginTop: '5px'
+	    },
+	    fab: {
+	        float: 'right'
+	    },
 	    list: {
 	        paddingTop: '2em',
 	        textAlign: 'center'
 	    }
 	};
+
+	var recentsIcon = _react2.default.createElement(
+	    _materialUi.FontIcon,
+	    { className: 'material-icons' },
+	    'restore'
+	);
 
 	var Usr = function (_Component) {
 	    _inherits(Usr, _Component);
@@ -66307,10 +66320,23 @@
 	                        'div',
 	                        { style: styles.header },
 	                        _react2.default.createElement(
+	                            _materialUi.Chip,
+	                            {
+	                                style: styles.chip },
+	                            _react2.default.createElement(_materialUi.Avatar, { icon: _react2.default.createElement(
+	                                    _materialUi.FontIcon,
+	                                    { className: 'material-icons' },
+	                                    'perm_identity'
+	                                ) }),
+	                            '\u8BB0\u4E8B\u5217\u8868'
+	                        ),
+	                        _react2.default.createElement(
 	                            _materialUi.FloatingActionButton,
-	                            { mini: true },
+	                            { mini: true, style: styles.fab },
 	                            _react2.default.createElement(_add2.default, null)
-	                        )
+	                        ),
+	                        _react2.default.createElement('br', null),
+	                        _react2.default.createElement('br', null)
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -66320,6 +66346,22 @@
 	                            'h3',
 	                            null,
 	                            this.props.params.id
+	                        )
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement(
+	                            _materialUi.Paper,
+	                            { zDepth: 1 },
+	                            _react2.default.createElement(
+	                                _materialUi.BottomNavigation,
+	                                { selectedIndex: 0 },
+	                                _react2.default.createElement(_materialUi.BottomNavigationItem, {
+	                                    label: 'Recents',
+	                                    icon: recentsIcon
+	                                })
+	                            )
 	                        )
 	                    )
 	                )
@@ -66333,7 +66375,17 @@
 	exports.default = Usr;
 
 /***/ },
-/* 603 */
+/* 603 */,
+/* 604 */,
+/* 605 */,
+/* 606 */,
+/* 607 */,
+/* 608 */,
+/* 609 */,
+/* 610 */,
+/* 611 */,
+/* 612 */,
+/* 613 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
