@@ -66238,6 +66238,12 @@
 
 	var _materialUi = __webpack_require__(234);
 
+	var _Card = __webpack_require__(425);
+
+	var _add = __webpack_require__(603);
+
+	var _add2 = _interopRequireDefault(_add);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66248,15 +66254,16 @@
 
 	var styles = {
 	    main: {
-	        textAlign: 'center',
-	        margin: '20% 20px'
+	        margin: '10px'
 	    },
-	    paper: {
-	        height: 216,
-	        width: 216,
+	    header: {
 	        margin: 'auto',
 	        textAlign: 'center',
 	        display: 'block'
+	    },
+	    list: {
+	        paddingTop: '2em',
+	        textAlign: 'center'
 	    }
 	};
 
@@ -66268,65 +66275,52 @@
 
 	        var _this = _possibleConstructorReturn(this, (Usr.__proto__ || Object.getPrototypeOf(Usr)).call(this, props));
 
-	        _this.state = { open: false };
+	        _this.state = {
+	            load: false,
+	            data: [{ title: 'test1', subtitle: 'subtest1' }, { title: 'test2', subtitle: 'subtest2' }, { title: 'test3', subtitle: 'subtest3' }]
+	        };
 	        return _this;
 	    }
 
 	    _createClass(Usr, [{
-	        key: 'handleToggle',
-	        value: function handleToggle() {
-	            this.setState({ open: !this.state.open });
-	        }
-	    }, {
-	        key: 'handleClose',
-	        value: function handleClose() {
-	            this.setState({ open: false });
-	        }
-	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this2 = this;
+	            var data = this.state.data;
 
+	            var CardList = data.map(function (value) {
+	                return _react2.default.createElement(
+	                    _Card.Card,
+	                    null,
+	                    _react2.default.createElement(_Card.CardHeader, {
+	                        title: value.title,
+	                        subtitle: value.subtitle
+	                    })
+	                );
+	            });
 	            return _react2.default.createElement(
 	                _materialUi.MuiThemeProvider,
 	                null,
 	                _react2.default.createElement(
 	                    'div',
 	                    { style: styles.main },
-	                    _react2.default.createElement(_materialUi.RaisedButton, {
-	                        label: 'Open Drawer',
-	                        onTouchTap: this.handleToggle
-	                    }),
 	                    _react2.default.createElement(
-	                        _materialUi.Drawer,
-	                        {
-	                            docked: false,
-	                            width: 20,
-	                            open: this.state.open,
-	                            onRequestChange: function onRequestChange(open) {
-	                                return _this2.setState({ open: open });
-	                            }
-	                        },
+	                        'div',
+	                        { style: styles.header },
 	                        _react2.default.createElement(
-	                            _materialUi.MenuItem,
-	                            null,
-	                            'Menu Item'
-	                        ),
-	                        _react2.default.createElement(
-	                            _materialUi.MenuItem,
-	                            null,
-	                            'Menu Item 2'
+	                            _materialUi.FloatingActionButton,
+	                            { mini: true },
+	                            _react2.default.createElement(_add2.default, null)
 	                        )
 	                    ),
 	                    _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'this is usr page'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        this.props.params.id
+	                        'div',
+	                        { style: styles.list },
+	                        this.state.load ? CardList : _react2.default.createElement(_materialUi.CircularProgress, { size: 120, thickness: 5 }),
+	                        _react2.default.createElement(
+	                            'h3',
+	                            null,
+	                            this.props.params.id
+	                        )
 	                    )
 	                )
 	            );
@@ -66337,6 +66331,43 @@
 	}(_react.Component);
 
 	exports.default = Usr;
+
+/***/ },
+/* 603 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _pure = __webpack_require__(370);
+
+	var _pure2 = _interopRequireDefault(_pure);
+
+	var _SvgIcon = __webpack_require__(379);
+
+	var _SvgIcon2 = _interopRequireDefault(_SvgIcon);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var ContentAdd = function ContentAdd(props) {
+	  return _react2.default.createElement(
+	    _SvgIcon2.default,
+	    props,
+	    _react2.default.createElement('path', { d: 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' })
+	  );
+	};
+	ContentAdd = (0, _pure2.default)(ContentAdd);
+	ContentAdd.displayName = 'ContentAdd';
+	ContentAdd.muiName = 'SvgIcon';
+
+	exports.default = ContentAdd;
 
 /***/ }
 /******/ ]);
