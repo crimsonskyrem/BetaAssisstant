@@ -3,8 +3,7 @@ var AV = require('leanengine');
 exports.deal = function(usr,content,cb) {
     var msg = String(content);
     if(msg.match(/^:?[hH](elp)?$/)){
-        //var usrurl = "http://sven.leanapp.cn/"+usr;
-	      var usrurl = "http://sven.leanapp.cn/";
+        var usrurl = "http://sven.leanapp.cn/"+usr;
         var reply =  "命令列表:\n\n\
         h or help : 显示此条帮助信息;\n\n\
         c or check : 查询备忘, 例：':c 1';\n\n\
