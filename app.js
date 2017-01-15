@@ -14,7 +14,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 // 加载云代码方法
 app.use(cloud);
@@ -47,14 +47,14 @@ app.use(cookieParser());
 //  d.run(next);
 //});
 
-app.get('/', require('./routes').index);
+//app.get('/', require('./routes').index);
 
 
 app.get('/[A-z0-9]{28}/', function(req, res) {
     res.redirect('/#/usr/' + req.path.replace('/',''));
 });
 
-app.post('/[A-z0-9]{28}/', require('./routes/memo').memo);
+app.post('/json', require('./routes/memo').memo);
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/wechat', wechat);

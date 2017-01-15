@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {MuiThemeProvider,FloatingActionButton,CircularProgress,
         Paper,BottomNavigation,BottomNavigationItem,FontIcon,Avatar,Chip} from 'material-ui';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
+import SvgIconFace from 'material-ui/svg-icons/action/face';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import axios from 'axios';
 
 const styles = {
     main:{
@@ -24,26 +26,38 @@ const styles = {
         paddingTop:'2em',
         textAlign: 'center',
     },
+    card:{
+        textAlign:'left'
+    }
 };
 
 const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
 
 class Usr extends Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state = {
             load:false,
-            data:[
-                {title:'test1',subtitle:'subtest1'},
-                {title:'test2',subtitle:'subtest2'},
-                {title:'test3',subtitle:'subtest3'},
-            ]
+            data:[]
         };
+    }
+    componentWillMount(){
+        const component = this;
+        axios.post('/json',{
+            usr:this.props.params.id,
+        }).then(function (response) {
+            component.setState({
+                load:true,
+                data:response.data
+            });
+        }).catch(function (error) {
+            console.log(error);
+        });
     }
     render(){
         const {data} = this.state;
         const CardList = data.map((value)=>
-            <Card>
+            <Card style={styles.card}>
                 <CardHeader
                 title={value.title}
                 subtitle={value.subtitle}
@@ -56,7 +70,7 @@ class Usr extends Component{
                     <div style={styles.header}>
                         <Chip
                             style={styles.chip}>
-                            <Avatar icon={<FontIcon className="material-icons">perm_identity</FontIcon>} />
+                            <Avatar icon={<SvgIconFace />} />
                             记事列表
                         </Chip>
                         <FloatingActionButton mini={true} style={styles.fab}>
@@ -69,7 +83,6 @@ class Usr extends Component{
                             {this.state.load?CardList:
                                 <CircularProgress size={120} thickness={5} />
                             }
-                            <h3>{this.props.params.id}</h3>
                     </div>
                     <div>
                         <Paper zDepth={1}>
