@@ -14,7 +14,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
-app.use(express.static('public'));
 
 // 加载云代码方法
 app.use(cloud);
@@ -56,6 +55,8 @@ app.get('/[A-z0-9]{28}/', function(req, res) {
 
 app.post('/json', require('./routes/memo').memo);
 
+//React静态页面
+app.use(express.static('public'));
 // 可以将一类的路由单独保存在一个文件中
 app.use('/wechat', wechat);
 

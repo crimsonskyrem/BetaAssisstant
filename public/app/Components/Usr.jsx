@@ -41,10 +41,10 @@ class Usr extends Component{
             data:[]
         };
     }
-    componentWillMount(){
+    componentDidMount(){
         const component = this;
         axios.post('/json',{
-            usr:this.props.params.id,
+            'usr':component.props.params.id,
         }).then(function (response) {
             component.setState({
                 load:true,

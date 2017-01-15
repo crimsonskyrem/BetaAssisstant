@@ -2,6 +2,7 @@ var av = require('leanengine');
 
 exports.memo = function(req, res){
     var usr = req.params.usr;
+    console.log(usr);
     var que = new av.Query('memoList');
     que.equalTo('userId',usr);
     que.addDescending('updatedAt');
