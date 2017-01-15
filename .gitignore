@@ -8,3 +8,6 @@ config/wechat.js
 #npm
 node_modules/
 npm-debug.log
+
+#webpack build
+public/www/bundle.js

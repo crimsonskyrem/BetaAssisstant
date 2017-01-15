@@ -1,7 +1,7 @@
 {
   "name": "sven",
   "version": "0.0.1",
-  "description": "A sample Weixin server app using LeanEngine",
+  "description": "A wechat assisstant using LeanEngine",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

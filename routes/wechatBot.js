@@ -1,10 +1,9 @@
 var router = require('express').Router();
 // 引用 wechat 库，详细请查看 https://github.com/node-webot/wechat
 var wechat = require('wechat');
-var config = require('../config/wechat.js');
 var WechatAPI = require('wechat-api');
-var api = new WechatAPI(config.appid,
-  config.secretKey);
+var config = require('../config/wechat');
+var api = new WechatAPI(config.appid,config.secretKey);
 var beta = require('./beta');
 
 router.use('/', wechat('sdo57suhwrf45dcskcjhv2aergSDf').text(function(message, req, res, next) {

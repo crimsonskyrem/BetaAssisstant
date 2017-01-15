@@ -14,7 +14,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 // 加载云代码方法
 app.use(cloud);
@@ -47,7 +47,7 @@ app.use(cookieParser());
 //  d.run(next);
 //});
 
-//app.get('/', require('./routes').index);
+app.get('/', require('./routes').index);
 
 
 app.get('/[A-z0-9]{28}/', function(req, res) {
