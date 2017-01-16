@@ -4,7 +4,7 @@ module.exports = {
         filename: 'index.js',
         path: './public/www'
     },
-    devtool: 'eval',
+    devtool: 'cheap-module-eval-source-map',
     module:{
         loaders: [
             {
