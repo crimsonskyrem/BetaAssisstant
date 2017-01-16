@@ -4,6 +4,8 @@ import {MuiThemeProvider,FloatingActionButton,CircularProgress,
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
 import SvgIconFace from 'material-ui/svg-icons/action/face';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Stagger from 'react-css-stagger';
+import '../css/card.scss';
 import axios from 'axios';
 
 const styles = {
@@ -80,9 +82,12 @@ class Usr extends Component{
                         <br />
                     </div>
                     <div style={styles.list}>
-                            {this.state.load?CardList:
-                                <CircularProgress size={120} thickness={5} />
-                            }
+                        {this.state.load?
+                            <Stagger transition="card" delay={100}>
+                                {CardList}
+                            </Stagger>:
+                            <CircularProgress size={120} thickness={5} />
+                        }
                     </div>
                     <div>
                         <Paper zDepth={1}>
