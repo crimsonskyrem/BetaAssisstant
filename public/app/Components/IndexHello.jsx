@@ -19,7 +19,7 @@ const styles = {
 const PaperCircle = () => (
         <Paper style={styles.paper} zDepth={2} circle={true} >
         <Avatar
-            src='./www/img/index.jpg'
+            src='./img/index.jpg'
             size={216}
         />
         </Paper>

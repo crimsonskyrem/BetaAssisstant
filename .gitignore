@@ -10,4 +10,4 @@ node_modules/
 npm-debug.log
 
 #webpack build
-public/www/bundle.js
+public/www/index.js*

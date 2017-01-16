@@ -56,7 +56,7 @@ app.get('/[A-z0-9]{28}/', function(req, res) {
 app.post('/json', require('./routes/memo').memo);
 
 //React静态页面
-app.use(express.static('public'));
+app.use(express.static('public/www'));
 // 可以将一类的路由单独保存在一个文件中
 app.use('/wechat', wechat);
 
