@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import {MuiThemeProvider,FloatingActionButton,CircularProgress,
-        Paper,BottomNavigation,BottomNavigationItem,FontIcon,Avatar,Chip} from 'material-ui';
+import {MuiThemeProvider,AppBar,IconButton,FloatingActionButton,CircularProgress,
+        FontIcon} from 'material-ui';
 import {Card, CardActions, CardHeader} from 'material-ui/Card';
-import SvgIconFace from 'material-ui/svg-icons/action/face';
+import Assignment from 'material-ui/svg-icons/action/assignment';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Stagger from 'react-css-stagger';
 import '../css/card.scss';
 import axios from 'axios';
+import { createStore } from 'redux';
 
 const styles = {
     main:{
@@ -17,23 +18,21 @@ const styles = {
         textAlign: 'center',
         display: 'block',
     },
-    chip:{
-        float:'left',
-        marginTop:'5px'
-    },
     fab:{
         float:'right'
     },
     list:{
-        paddingTop:'2em',
         textAlign: 'center',
+        minHeight: '200px'
     },
     card:{
         textAlign:'left'
+    },
+    wait:{
+        margin:'30% 0'
     }
 };
 
-const recentsIcon = <FontIcon className="material-icons">restore</FontIcon>;
 
 class Usr extends Component{
     constructor(){
@@ -66,38 +65,27 @@ class Usr extends Component{
                 />
             </Card>
         );
+        const flatButton = (
+            <FloatingActionButton mini={true} style={styles.fab}>
+            </FloatingActionButton>
+        );
         return (
             <MuiThemeProvider>
                 <div style={styles.main}>
                     <div style={styles.header}>
-                        <Chip
-                            style={styles.chip}>
-                            <Avatar icon={<SvgIconFace />} />
-                            记事列表
-                        </Chip>
-                        <FloatingActionButton mini={true} style={styles.fab}>
-                            <ContentAdd />
-                        </FloatingActionButton>
-                        <br />
-                        <br />
+                        <AppBar
+                            title={<span >MemoList</span>}
+                            iconElementLeft={<IconButton><Assignment /></IconButton>}
+                            iconElementRight={<IconButton><ContentAdd /></IconButton>}
+                        />
                     </div>
                     <div style={styles.list}>
                         {this.state.load?
                             <Stagger transition="card" delay={100}>
                                 {CardList}
                             </Stagger>:
-                            <CircularProgress size={120} thickness={5} />
+                            <CircularProgress size={120} thickness={5} style={styles.wait} />
                         }
-                    </div>
-                    <div>
-                        <Paper zDepth={1}>
-                            <BottomNavigation selectedIndex={0}>
-                            <BottomNavigationItem
-                                label="Recents"
-                                icon={recentsIcon}
-                            />
-                            </BottomNavigation>
-                        </Paper>
                     </div>
               </div>
             </MuiThemeProvider>

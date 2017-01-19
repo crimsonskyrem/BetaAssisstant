@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory} from 'react-router'
-import IndexHello from './Components/IndexHello';
-import NotFound from './Components/NotFound';
-import Usr from './Components/Usr';
+import IndexHello from './components/IndexHello';
+import NotFound from './components/NotFound';
+import Usr from './components/Usr';
 
 ReactDOM.render(
     (
