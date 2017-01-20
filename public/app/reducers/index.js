@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import todos from './todos';
 import memos from './memos';
-import toggoleTodoMemo from './toggleTodoMemo';
+import switchTodoMemo from './switchTodoMemo';
 
-const usrApp = combineReducers({
+const usrView = combineReducers({
     todos,
     memos,
-    toggleTodoMemo
+    switchTodoMemo
 });
 
-export default usrApp;
+export default usrView;

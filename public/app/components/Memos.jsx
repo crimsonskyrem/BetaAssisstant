@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {MuiThemeProvider,CircularProgress} from 'material-ui';
 import {Card, CardActions, CardHeader,CardText} from 'material-ui/Card';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import Stagger from 'react-css-stagger';
 import '../css/card.scss';
 import axios from 'axios';
@@ -13,7 +12,7 @@ const styles = {
     },
     card:{
         textAlign:'left',
-        wordBreak:'break-all'
+        wordBreak:'break-word'
     },
     wait:{
         margin:'30% 0'
@@ -29,7 +28,6 @@ class Memos extends Component{
             load:false,
             data:[]
         };
-        injectTapEventPlugin();
     }
     componentDidMount(){
         const component = this;

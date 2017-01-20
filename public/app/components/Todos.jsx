@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {MuiThemeProvider,CircularProgress} from 'material-ui';
 import {List, ListItem} from 'material-ui/List';
-import ActionInfo from 'material-ui/svg-icons/action/info';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import ActionQueryBuilder from 'material-ui/svg-icons/action/query-builder';
+import ActionDone from 'material-ui/svg-icons/action/done';
 import Stagger from 'react-css-stagger';
 import '../css/card.scss';
 import axios from 'axios';
@@ -29,11 +29,9 @@ class Todos extends Component{
     constructor(){
         super();
         this.state = {
-            expanded:false,
             load:false,
             data:[]
         };
-        injectTapEventPlugin();
     }
     componentDidMount(){
         const component = this;
@@ -54,7 +52,7 @@ class Todos extends Component{
             <ListItem primaryText={value.subtitle}
                       secondaryText={value.title}
                       style={styles.span}
-                      rightIcon={<ActionInfo />} />
+                      rightIcon={<ActionQueryBuilder />} />
        );
         return (
                 <MuiThemeProvider>
