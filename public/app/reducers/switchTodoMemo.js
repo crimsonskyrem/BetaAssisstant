@@ -8,7 +8,7 @@ const switchTodoMemo = (state = initialState, action) => {
     switch (action.type) {
     case SWITCH_TODO_MEMO:
         return Object.assign({},state,{
-            view:action.view
+            view:action.view == TODO? MEMO:TODO
         });
     default:
         return state;
