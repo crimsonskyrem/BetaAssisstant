@@ -4,7 +4,6 @@ import { createStore } from 'redux';
 import {Provider} from 'react-redux';
 import SwitchCombineView from '../containers/switchCombineView';
 import switchTodoMemo from '../reducers/switchTodoMemo';
-import Tests from './Test.jsx';
 
 const styles = {
     main:{

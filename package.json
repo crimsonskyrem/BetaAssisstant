@@ -1,12 +1,12 @@
 {
-  "name": "sven",
-  "version": "0.0.1",
+  "name": "BetaAssisstant",
+  "version": "0.1.0",
   "description": "A wechat assisstant using LeanEngine",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "webpack -w & nodemon server.js",
-    "build": "webpack --optimize-minimize "
+    "build": "webpack --config=webpack.minimize.config.js --optimize-minimize "
   },
   "keywords": [
     "node",
