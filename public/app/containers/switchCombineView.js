@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import {MEMO,TODO,SWITCH_TODO_MEMO,switchTodoMemo} from '../actions';
 import CombineView from '../components/CombineView';
+import {switchTodoMemo} from '../actions';
 
 const mapStateToProps = (state) => {
     return {
@@ -10,15 +10,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onTouchTap: (view) => {
+        onSwitchClick: (view) => {
             dispatch(switchTodoMemo(view));
         }
     };
 };
 
-const switchableCombineView = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(CombineView);
 
-export default switchableCombineView;
+const SwitchCombineView = connect(
+                                    mapStateToProps,
+                                    mapDispatchToProps
+                                )(CombineView);
+
+
+export default SwitchCombineView;

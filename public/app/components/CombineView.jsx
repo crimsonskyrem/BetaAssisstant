@@ -16,9 +16,8 @@ const styles = {
 
 class CombineView extends Component{
     render(){
-        const {view} = this.props;
+        const {view,onSwitchClick} = this.props;
         return (
-
             <div style={styles.main}>
                 <MuiThemeProvider>
                     <AppBar
@@ -29,7 +28,7 @@ class CombineView extends Component{
                                             <IconButton><DateRange /></IconButton>:
                                             <IconButton><Assignment /></IconButton>}
                         iconElementRight={<IconButton><ContentAdd /></IconButton>}
-                        onLeftIconButtonTouchTap={onTouchTap(view)}
+                        onLeftIconButtonTouchTap={()=>onSwitchClick(view)}
                     />
                 </MuiThemeProvider>
                 {view == TODO ?
@@ -42,4 +41,3 @@ class CombineView extends Component{
 }
 
 export default CombineView;
-
