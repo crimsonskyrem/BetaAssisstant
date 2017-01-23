@@ -8,17 +8,11 @@ import Todos from './Todos';
 import {TODO,MEMO,SWITCH_TODO_MEMO,switchTodoMemo} from '../actions';
 import {connect} from 'react-redux';
 
-const styles = {
-    main:{
-        margin:'10px',
-    },
-}
-
 class CombineView extends Component{
     render(){
-        const {view,onSwitchClick} = this.props;
+        const {view,onSwitchClick,id} = this.props;
         return (
-            <div style={styles.main}>
+            <div>
                 <MuiThemeProvider>
                     <AppBar
                         title={view == TODO ?
@@ -32,8 +26,8 @@ class CombineView extends Component{
                     />
                 </MuiThemeProvider>
                 {view == TODO ?
-                    <Todos id={this.props.id} />:
-                    <Memos id={this.props.id} />
+                    <Todos id={id} />:
+                    <Memos id={id} />
                 }
             </div>
         );

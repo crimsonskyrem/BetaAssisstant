@@ -1,3 +1,10 @@
+import {ADD_TODO,TOGGLE_TODO} from '../actions';
+
+const initialState = {
+    load:false,
+    data:[]
+};
+
 const todo = (state = {}, action) => {
     switch (action.type) {
     case 'ADD_TODO':

@@ -2,14 +2,8 @@ import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { createStore } from 'redux';
 import {Provider} from 'react-redux';
-import SwitchCombineView from '../containers/switchCombineView';
+import SwitchCombineView from '../containers/SwitchCombineView';
 import switchTodoMemo from '../reducers/switchTodoMemo';
-
-const styles = {
-    main:{
-        margin:'10px',
-    },
-}
 
 let store = createStore(switchTodoMemo);
 
