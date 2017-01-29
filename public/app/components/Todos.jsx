@@ -28,8 +28,6 @@ const styles = {
 class Todos extends Component{
     constructor(){
         super();
-        this.state = {
-            load:false,
             data:[]
         };
     }
