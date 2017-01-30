@@ -1,4 +1,5 @@
-import {ADD_TODO,TOGGLE_TODO} from '../actions';
+import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,
+        fetchTodos,} from '../actions';
 
 const initialState = {
     load:false,
@@ -7,6 +8,8 @@ const initialState = {
 
 const todo = (state = {}, action) => {
     switch (action.type) {
+    case GET_TODOS:
+        return initialState;
     case ADD_TODO:
         return {
             text: action.text,
@@ -26,8 +29,10 @@ const todo = (state = {}, action) => {
     }
 };
 
-const todos = (state = [], action) => {
+const todos = (state = initialState, action) => {
     switch (action.type) {
+    case GET_TODOS:
+        return todo(state,action);
     case ADD_TODO:
         return [
             ...state,

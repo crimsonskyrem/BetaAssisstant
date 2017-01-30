@@ -4,7 +4,7 @@ import Assignment from 'material-ui/svg-icons/action/assignment';
 import DateRange from 'material-ui/svg-icons/action/date-range';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Memos from './Memos';
-import Todos from './Todos';
+import TodoViewApp from '../containers/TodoViewApp';
 import {TODO,MEMO,SWITCH_TODO_MEMO,switchTodoMemo} from '../actions';
 import {connect} from 'react-redux';
 
@@ -26,7 +26,7 @@ class CombineView extends Component{
                     />
                 </MuiThemeProvider>
                 {view == TODO ?
-                    <Todos id={id} />:
+                    <TodoViewApp id={id} />:
                     <Memos id={id} />
                 }
             </div>

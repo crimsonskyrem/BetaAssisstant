@@ -74,4 +74,6 @@ const toggleTodo = (id) => {
 };
 
 export {TODO,MEMO,ADD_TODO,ADD_MEMO,SWITCH_TODO_MEMO,TOGGLE_TODO,
+        GET_TODOS,GET_MEMOS,RECEIVED_TODOS,
+        getTodos,receivedTodos,fetchTodos,
         addTodo,addMemo,switchTodoMemo,toggleTodo};

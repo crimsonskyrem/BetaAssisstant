@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {MuiThemeProvider,CircularProgress} from 'material-ui';
 import {List, ListItem} from 'material-ui/List';
 import ActionQueryBuilder from 'material-ui/svg-icons/action/query-builder';
 import ActionDone from 'material-ui/svg-icons/action/done';
@@ -26,26 +25,8 @@ const styles = {
 
 
 class Todos extends Component{
-    constructor(){
-        super();
-            data:[]
-        };
-    }
-    componentDidMount(){
-        const component = this;
-        axios.post('/json', {
-            usr: component.props.id,
-       }).then(function (response) {
-            component.setState({
-                load:true,
-                data:response.data
-            });
-        }).catch(function (error) {
-            console.log(error);
-        });
-    }
     render(){
-        const {data} = this.state;
+        const {data} = this.props;
         const Lists = data.map((value)=>
             <ListItem primaryText={value.subtitle}
                       secondaryText={value.title}
@@ -53,16 +34,9 @@ class Todos extends Component{
                       rightIcon={<ActionQueryBuilder />} />
        );
         return (
-                <MuiThemeProvider>
-                <div style={styles.list}>
-                    {this.state.load?
-                        <Stagger transition="card" delay={100}>
-                            {Lists}
-                        </Stagger>:
-                        <CircularProgress size={120} thickness={5} style={styles.wait} />
-                    }
-                </div>
-                </MuiThemeProvider>
+                    <Stagger transition="card" delay={100}>
+                        {Lists}
+                    </Stagger>
         );
     }
 }

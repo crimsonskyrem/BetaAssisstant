@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { createStore } from 'redux';
 import {Provider} from 'react-redux';
-import SwitchCombineView from '../containers/SwitchCombineView';
+import CombineViewApp from '../containers/CombineViewApp';
 import switchTodoMemo from '../reducers/switchTodoMemo';
 
 let store = createStore(switchTodoMemo);
@@ -15,7 +15,7 @@ class Usr extends Component{
     render(){
         return (
             <Provider store = {store}>
-                <SwitchCombineView id={this.props.params.id} />
+                <CombineViewApp id={this.props.params.id} />
             </Provider>
        );
     }
