@@ -17,8 +17,11 @@ const todo = (state = initialState, action) => {
         });
     case ADD_TODO:
         return Object.assign({}, state, {
-            text: action.text,
-            completed: false
+            data:[
+                    ...state.data,
+                    {text: action.text,
+                    completed: false}
+                ]
         });
     case TOGGLE_TODO:
         if (state.id !== action.id) {
