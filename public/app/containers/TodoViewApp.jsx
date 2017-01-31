@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {MuiThemeProvider,CircularProgress} from 'material-ui';
-import {ADD_TODO,TOGGLE_TODO} from '../actions';
+import {fetchTodos} from '../actions';
 import Todos from '../components/Todos';
 import axios from 'axios';
 
@@ -18,37 +18,32 @@ const styles = {
 class TodoView extends Component{
     constructor(){
         super();
-        this.state = {
-            load:false,
-            data:[]
-        };
     }
     componentDidMount(){
-        const component = this;
-        axios.post('/json', {
-            usr: component.props.id
-        }).then(function (response) {
-            component.setState({
-                load:true,
-                data:response.data
-            });
-        }).catch(function (error) {
-            console.log(error);
-        });
+        const {dispatch,id} = this.props;
+        dispatch(fetchTodos(id));
     }
     render(){
+        const {load,data} = this.props;
         return (
             <MuiThemeProvider>
                 <div style={styles.list}>
-                {this.state.load?
-                <Todos data={this.state.data}/>
-                    :
-                <CircularProgress size={120} thickness={5} style={styles.wait} />
-                }
+                {load?
+                    <Todos data={data}/> :
+                    <CircularProgress size={120} thickness={5} style={styles.wait} />}
                 </div>
             </MuiThemeProvider>
         );
     }
 }
 
-export default TodoView;
+const mapStateToProps = (state) => {
+    return {
+        load:state.todos.load,
+        data:state.todos.data
+    };
+};
+
+const TodoViewApp = connect(mapStateToProps)(TodoView);
+
+export default TodoViewApp;

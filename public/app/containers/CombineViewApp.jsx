@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import CombineView from '../components/CombineView';
-import {switchTodoMemo} from '../actions';
+import {switchTodoMemo,TODO} from '../actions';
 
 const mapStateToProps = (state) => {
     return {
-        view:state.view
+        view:state.switchTodoMemo.view
     };
 };
 
@@ -17,10 +17,10 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-const SwitchCombineView = connect(
+const CombineViewApp = connect(
                                     mapStateToProps,
                                     mapDispatchToProps
-                                )(CombineView);
+                          )(CombineView);
 
 
-export default SwitchCombineView;
+export default CombineViewApp;

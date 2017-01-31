@@ -6,15 +6,20 @@ const initialState = {
     data:[]
 };
 
-const todo = (state = {}, action) => {
+const todo = (state = initialState, action) => {
     switch (action.type) {
     case GET_TODOS:
-        return initialState;
+        return state;
+    case RECEIVED_TODOS:
+        return Object.assign({}, state, {
+            data:action.data,
+            load:true
+        });
     case ADD_TODO:
-        return {
+        return Object.assign({}, state, {
             text: action.text,
             completed: false
-        };
+        });
     case TOGGLE_TODO:
         if (state.id !== action.id) {
             return state;
@@ -29,15 +34,12 @@ const todo = (state = {}, action) => {
     }
 };
 
-const todos = (state = initialState, action) => {
+const todos = (state = [], action) => {
     switch (action.type) {
     case GET_TODOS:
-        return todo(state,action);
+    case RECEIVED_TODOS:
     case ADD_TODO:
-        return [
-            ...state,
-            todo(undefined, action)
-        ];
+        return todo(undefined, action);
     case TOGGLE_TODO:
         return state.map(t =>
                     todo(t, action));

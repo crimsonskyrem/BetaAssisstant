@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { createStore } from 'redux';
+import { createStore,applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import {Provider} from 'react-redux';
 import CombineViewApp from '../containers/CombineViewApp';
-import switchTodoMemo from '../reducers/switchTodoMemo';
+import userReducer from '../reducers';
 
-let store = createStore(switchTodoMemo);
+const store = createStore(userReducer,
+                        applyMiddleware(thunkMiddleware)
+            );
 
 class Usr extends Component{
     constructor(){

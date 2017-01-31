@@ -3,10 +3,10 @@ import todos from './todos';
 import memos from './memos';
 import switchTodoMemo from './switchTodoMemo';
 
-const usrView = combineReducers({
+const usrReducer = combineReducers({
+    switchTodoMemo,
     todos,
-    memos,
-    switchTodoMemo
+    memos
 });
 
-export default usrView;
+export default usrReducer;
