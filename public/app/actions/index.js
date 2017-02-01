@@ -5,6 +5,7 @@ const MEMO = 'MEMO';
 const GET_TODOS = 'GET_TODOS';
 const GET_MEMOS = 'GET_MEMOS';
 const RECEIVED_TODOS = 'RECEIVED_TODOS';
+const ADD_BUTTON_CLICK = 'ADD_BUTTON_CLICK';
 const ADD_TODO = 'ADD_TODO';
 const ADD_MEMO = 'ADD_MEMO';
 const SWITCH_TODO_MEMO = 'SWITCH_TODO_MEMO';
@@ -28,6 +29,13 @@ const switchTodoMemo = (view) => {
     return {
         type: SWITCH_TODO_MEMO,
         view
+    };
+};
+
+const addButtonClick = (addExpanded) => {
+    return {
+        type:ADD_BUTTON_CLICK,
+        addExpanded
     };
 };
 
@@ -74,6 +82,6 @@ const toggleTodo = (id) => {
 };
 
 export {TODO,MEMO,ADD_TODO,ADD_MEMO,SWITCH_TODO_MEMO,TOGGLE_TODO,
-        GET_TODOS,GET_MEMOS,RECEIVED_TODOS,
-        getTodos,receivedTodos,fetchTodos,
+        GET_TODOS,GET_MEMOS,RECEIVED_TODOS,ADD_BUTTON_CLICK,
+        getTodos,receivedTodos,fetchTodos,addButtonClick,
         addTodo,addMemo,switchTodoMemo,toggleTodo};

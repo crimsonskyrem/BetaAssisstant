@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import {Provider} from 'react-redux';
 import CombineViewApp from '../containers/CombineViewApp';
 import userReducer from '../reducers';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const store = createStore(userReducer,
                         applyMiddleware(thunkMiddleware)
@@ -18,7 +19,9 @@ class Usr extends Component{
     render(){
         return (
             <Provider store = {store}>
-                <CombineViewApp id={this.props.params.id} />
+                <MuiThemeProvider>
+                    <CombineViewApp id={this.props.params.id} />
+                </MuiThemeProvider>
             </Provider>
        );
     }

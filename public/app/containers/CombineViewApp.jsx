@@ -1,10 +1,12 @@
 import {connect} from 'react-redux';
 import CombineView from '../components/CombineView';
-import {switchTodoMemo,TODO} from '../actions';
+import {TODO,
+        switchTodoMemo,addButtonClick} from '../actions';
 
 const mapStateToProps = (state) => {
     return {
-        view:state.switchTodoMemo.view
+        view:state.switchTodoMemo.view,
+        addExpanded:state.switchTodoMemo.addExpanded
     };
 };
 
@@ -12,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onSwitchClick: (view) => {
             dispatch(switchTodoMemo(view));
+        },
+        onAddClick: (addExpanded) => {
+            dispatch(addButtonClick(addExpanded));
         }
     };
 };

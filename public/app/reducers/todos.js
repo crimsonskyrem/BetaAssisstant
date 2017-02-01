@@ -37,7 +37,7 @@ const todo = (state = initialState, action) => {
     }
 };
 
-const todos = (state = [], action) => {
+const todos = (state = initialState, action) => {
     switch (action.type) {
     case GET_TODOS:
     case RECEIVED_TODOS:

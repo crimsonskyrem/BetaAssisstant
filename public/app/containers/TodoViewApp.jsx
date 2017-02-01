@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {MuiThemeProvider,CircularProgress} from 'material-ui';
+import {CircularProgress} from 'material-ui';
 import {fetchTodos} from '../actions';
 import Todos from '../components/Todos';
 import axios from 'axios';
@@ -26,13 +26,11 @@ class TodoView extends Component{
     render(){
         const {load,data} = this.props;
         return (
-            <MuiThemeProvider>
                 <div style={styles.list}>
                 {load?
                     <Todos data={data}/> :
                     <CircularProgress size={120} thickness={5} style={styles.wait} />}
                 </div>
-            </MuiThemeProvider>
         );
     }
 }

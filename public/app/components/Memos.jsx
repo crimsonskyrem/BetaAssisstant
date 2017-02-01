@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {MuiThemeProvider,CircularProgress} from 'material-ui';
+import {CircularProgress} from 'material-ui';
 import {Card, CardActions, CardHeader,CardText} from 'material-ui/Card';
 import Stagger from 'react-css-stagger';
 import '../css/card.scss';
@@ -58,7 +58,6 @@ class Memos extends Component{
             </Card>
         );
         return (
-                <MuiThemeProvider>
                 <div style={styles.list}>
                     {this.state.load?
                         <Stagger transition="card" delay={100}>
@@ -67,7 +66,6 @@ class Memos extends Component{
                         <CircularProgress size={120} thickness={5} style={styles.wait} />
                     }
                 </div>
-                </MuiThemeProvider>
         );
     }
 }
