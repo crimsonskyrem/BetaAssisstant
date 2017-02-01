@@ -3,11 +3,16 @@ import {Card,CardText,CardActions,TextField,Checkbox,RaisedButton} from 'materia
 
 const styles = {
     block:{
-        overflow:'auto'
+        overflow:'auto',
+        paddingButtom:'5px'
+    },
+    checkBox:{
+        float:'left',
+        width:'40%',
+        margin:'6px 0 0 10px'
     },
     button:{
         float:'right',
-        margin:'10px 0'
     }
 };
 
@@ -29,9 +34,9 @@ class AddTodosCard extends Component{
                     </CardText>
                     <CardActions expandable={true}
                                  style={styles.block}>
-                    <Checkbox
-                    label="Finished"
-                    labelPosition="left"
+                    <Checkbox   style={styles.checkBox}
+                                label="Finished"
+                                labelPosition="left"
                     />
                     <RaisedButton label="Save"
                                   style={styles.button}
