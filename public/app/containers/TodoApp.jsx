@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress} from 'material-ui';
 import {fetchTodos} from '../actions';
-import Todos from '../components/Todos';
+import TodoView from '../components/TodoView';
 import axios from 'axios';
 
 const styles = {
@@ -15,7 +15,7 @@ const styles = {
     }
 };
 
-class TodoView extends Component{
+class TodoApp extends Component{
     constructor(){
         super();
     }
@@ -28,7 +28,7 @@ class TodoView extends Component{
         return (
                 <div style={styles.list}>
                 {load?
-                    <Todos data={data}/> :
+                    <TodoView data={data}/> :
                     <CircularProgress size={120} thickness={5} style={styles.wait} />}
                 </div>
         );
@@ -42,6 +42,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-const TodoViewApp = connect(mapStateToProps)(TodoView);
-
-export default TodoViewApp;
+export default connect(mapStateToProps)(TodoApp);

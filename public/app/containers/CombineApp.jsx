@@ -22,10 +22,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-const CombineViewApp = connect(
-                                    mapStateToProps,
-                                    mapDispatchToProps
-                          )(CombineView);
+export default connect(
+                        mapStateToProps,
+                        mapDispatchToProps
+                      )(CombineView);
 
-
-export default CombineViewApp;

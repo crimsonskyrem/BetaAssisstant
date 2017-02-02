@@ -4,9 +4,9 @@ import Assignment from 'material-ui/svg-icons/action/assignment';
 import DateRange from 'material-ui/svg-icons/action/date-range';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Memos from './Memos';
-import TodoViewApp from '../containers/TodoViewApp';
+import TodoApp from '../containers/TodoApp';
 import {TODO} from '../actions';
-import AddTodosCard from './AddTodosCard';
+import AddTodo from './AddTodo';
 
 
 class CombineView extends Component{
@@ -27,9 +27,11 @@ class CombineView extends Component{
                     onLeftIconButtonTouchTap={()=>onSwitchClick(view)}
                     onRightIconButtonTouchTap={()=>onAddClick(addExpanded)}
                 />
-                <AddTodosCard expanded={addExpanded} toggle={onAddClick}/>
                {view == TODO ?
-                    <TodoViewApp id={id} />:
+                <div>
+                    <AddTodo expanded={addExpanded} toggle={onAddClick}/>
+                    <TodoApp id={id} />
+                </div>:
                     <Memos id={id} />
                 }
             </div>

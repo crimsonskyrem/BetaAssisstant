@@ -16,7 +16,24 @@ const styles = {
     }
 };
 
-class AddTodosCard extends Component{
+class AddTodo extends Component{
+    constructor(){
+        super();
+        this.state = {
+            todoText:'',
+            finished:false
+        }
+    }
+    checkBox(event,checked){
+        this.setState({
+            finished:checked
+        });
+    }
+    textChange(event,newVal){
+        this.setState({
+            todoText:newVal
+        });
+    }
 
     render(){
         const {expanded,toggle} = this.props;
@@ -24,12 +41,14 @@ class AddTodosCard extends Component{
                 <Card expanded={expanded}>
                     <CardText expandable={true}>
                     <TextField
+                        value={this.state.todoText}
                         floatingLabelText="Type your todos here"
                         hintText="MultiLine with rows: 2 and rowsMax: 4"
                         multiLine={true}
                         fullWidth={true}
                         rows={2}
                         rowsMax={4}
+                        onChange={this.textChange.bind(this)}
                         />
                     </CardText>
                     <CardActions expandable={true}
@@ -37,6 +56,8 @@ class AddTodosCard extends Component{
                     <Checkbox   style={styles.checkBox}
                                 label="Finished"
                                 labelPosition="left"
+                                checked={this.state.finished}
+                                onCheck={this.checkBox.bind(this)}
                     />
                     <RaisedButton label="Save"
                                   style={styles.button}
@@ -47,4 +68,4 @@ class AddTodosCard extends Component{
     }
 }
 
-export default AddTodosCard;
+export default AddTodo;

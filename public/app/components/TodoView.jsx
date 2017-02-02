@@ -23,9 +23,9 @@ class Todos extends Component{
                       rightIcon={<ActionQueryBuilder />} />
        );
         return (
-                    <Stagger transition="card" delay={100}>
-                        {Lists}
-                    </Stagger>
+            <Stagger transition="card" delay={100}>
+                {Lists}
+            </Stagger>
         );
     }
 }
