@@ -11,6 +11,28 @@ const ADD_MEMO = 'ADD_MEMO';
 const SWITCH_TODO_MEMO = 'SWITCH_TODO_MEMO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
 
+const api = restful('https://api.leancloud.cn/1.1/classes', fetchBackend(fetch));
+        api.header('X-LC-Id','LyfJraLkUWELBXzlcWJnEgkR');
+        api.header('X-LC-Key','XzJ6v4UjNBHT1pSUkWpRaozQ');
+api.header('Content-Type','application/json');
+const todos = api.all('memoList');
+//                 .header('X-LC-Key','XzJ6v4UjNBHT1pSUkWpRaozQ')
+//                 .header('Content-Type','application/json')
+const config = {
+    baseURL:'https://api.leancloud.cn/1.1/classes',
+    headers:{
+        'X-LC-Id':'LyfJraLkUWELBXzlcWJnEgkR',
+        'X-LC-Key':'XzJ6v4UjNBHT1pSUkWpRaozQ',
+        'Content-Type':'application/json'
+    },
+    params: {
+        where: '{"userId":"osEijvyh3bbYNYSPjORKAoDngtO0"}'
+    }
+};
+const todo = axios.create(config);
+
+
+
 const addTodo = (text) => {
     return {
         type: ADD_TODO,
@@ -47,6 +69,7 @@ const getTodos = (usrId) => {
 };
 
 const receivedTodos = (usrId,data) => {
+    console.log(data);
     return {
         type: RECEIVED_TODOS,
         data: data,
@@ -57,15 +80,11 @@ const receivedTodos = (usrId,data) => {
 const fetchTodos = (usrId) => {
     return dispatch => {
         dispatch(getTodos(usrId));
-        return axios.post('/json', {
-            usr: usrId,
-            view: TODO
-        }).then(
-            response => dispatch(receivedTodos(usrId,response.data))
-        ).catch(function (error) {
-            console.log(error);
-        });
-    };
+        return todo.get('memoList')
+                    .then(
+                        response => dispatch(receivedTodos(usrId,response.data.results))
+                    );
+   };
 };
 
 const getMemos = (usrId) => {

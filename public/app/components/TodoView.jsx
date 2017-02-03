@@ -17,8 +17,8 @@ class Todos extends Component{
     render(){
         const {data} = this.props;
         const Lists = data.map((value)=>
-            <ListItem primaryText={value.subtitle}
-                      secondaryText={value.title}
+            <ListItem primaryText={value.content}
+                      secondaryText={value.createdAt}
                       style={styles.span}
                       rightIcon={<ActionQueryBuilder />} />
        );
