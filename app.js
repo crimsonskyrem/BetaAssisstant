@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var wechat = require('./routes/wechatBot');
 var cloud = require('./cloud');
-var memo = require('./routes/memo');
 
 var app = express();
 
@@ -53,7 +52,7 @@ app.get('/[A-z0-9]{28}/', function(req, res) {
     res.redirect('/#/usr/' + req.path.replace('/',''));
 });
 
-app.post('/json', require('./routes/memo').memo);
+app.post('/json', require('./routes/request').request);
 
 //React静态页面
 app.use(express.static('public/www'));

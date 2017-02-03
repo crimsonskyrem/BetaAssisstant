@@ -58,7 +58,8 @@ const fetchTodos = (usrId) => {
     return dispatch => {
         dispatch(getTodos(usrId));
         return axios.post('/json', {
-            usr: usrId
+            usr: usrId,
+            view: TODO
         }).then(
             response => dispatch(receivedTodos(usrId,response.data))
         ).catch(function (error) {
