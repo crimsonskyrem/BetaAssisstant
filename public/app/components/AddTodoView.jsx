@@ -23,7 +23,7 @@ class AddTodoView extends Component{
     constructor(){
         super();
         this.state = {
-            todoText:'',
+            content:'',
             completed:false
         }
     }
@@ -34,14 +34,18 @@ class AddTodoView extends Component{
     }
     textChange(event,newVal){
         this.setState({
-            todoText:newVal
+            content:newVal
         });
     }
     onClick(){
         const {onAddClick,onSaveClick} = this.props;
-        onSaveClick(this.state.todoText,this.state.completed);
+        const data = {
+            content:this.state.content,
+            completed:this.state.completed
+        }
+        onSaveClick(data);
         this.setState({
-                    todoText:'',
+                    content:'',
                     completed:false
                 });
         onAddClick(true);
@@ -54,7 +58,7 @@ class AddTodoView extends Component{
                     <CardText expandable={true}>
                     <TextField
                         style={styles.textField}
-                        value={this.state.todoText}
+                        value={this.state.content}
                         floatingLabelText="Type your todos here"
                         hintText="MultiLine with rows: 2 and rowsMax: 4"
                         multiLine={true}

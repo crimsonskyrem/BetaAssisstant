@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress} from 'material-ui';
 import {ADD_TODO,
-        fetchTodos,addTodo} from '../actions';
+        fetchTodos,saveTodo} from '../actions';
 import TodoView from '../components/TodoView';
 import AddTodoView from '../components/AddTodoView';
 import EmptyView from '../components/EmptyView';
@@ -55,8 +55,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch:dispatch,
-        onSaveClick:(text,completed) => {
-            dispatch(addTodo(text,completed));
+        onSaveClick:(data) => {
+            dispatch(saveTodo(data));
         }
     }
 }

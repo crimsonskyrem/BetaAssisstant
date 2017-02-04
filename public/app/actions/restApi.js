@@ -19,3 +19,11 @@ export const getFromUsrId = (usrId) => {
     });
     return axios.create(newConfig);
 };
+
+export const saveOnPost= (data) => {
+    const newConfig = Object.assign({},config,{
+        method:'post',
+        data:data
+    });
+    return axios.create(newConfig);
+};

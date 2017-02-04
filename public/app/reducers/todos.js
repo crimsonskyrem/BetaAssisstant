@@ -18,7 +18,7 @@ const todo = (state = initialState, action) => {
     case ADD_TODO:
         return Object.assign({}, state, {
             data:[{objectId: 'fakeone',
-                   content: action.text,
+                   content: action.content,
                    createdAt: Date.now(),
                    completed: action.completed},
                    ...state.data

@@ -1,4 +1,4 @@
-import {getFromUsrId} from './restApi';
+import {getFromUsrId,saveOnPost} from './restApi';
 
 export const TODO = 'TODO';
 export const MEMO = 'MEMO';
@@ -11,11 +11,11 @@ export const ADD_MEMO = 'ADD_MEMO';
 export const SWITCH_TODO_MEMO = 'SWITCH_TODO_MEMO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 
-export const addTodo = (text,completed) => {
+export const addTodo = (data) => {
     return {
         type: ADD_TODO,
-        text,
-        completed
+        content:data.content,
+        completed:data.completed
     };
 };
 export const addMemo = (title,text) => {
@@ -55,18 +55,6 @@ export const receivedTodos = (data) => {
     };
 };
 
-export const fetchTodos = (usrId) => {
-    return dispatch => {
-        dispatch(getTodos(usrId));
-        const todo = getFromUsrId(usrId);
-        return todo.get('memoList')
-                    .then(
-                        response => dispatch(receivedTodos(response.data.results))
-                        //response => dispatch(receivedTodos([]))
-                    );
-   };
-};
-
 export const getMemos = (usrId) => {
     return {
         type: GET_MEMOS,
@@ -81,3 +69,28 @@ export const toggleTodo = (id) => {
     };
 };
 
+export const fetchTodos = (usrId) => {
+    return dispatch => {
+        dispatch(getTodos(usrId));
+        const todo = getFromUsrId(usrId);
+        return todo.get('memoList')
+            .then(
+                response => dispatch(receivedTodos(response.data.results))
+                //response => dispatch(receivedTodos([]))
+            );
+    };
+};
+
+export const saveTodo = (data) => {
+    return dispatch => {
+        dispatch(addTodo(data));
+        const todo = saveOnPost(data);
+        console.log(todo);
+        return todo('todoList').then(
+            response => {
+                console.log(response.data);
+            }
+        );
+
+    };
+};
