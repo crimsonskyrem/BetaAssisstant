@@ -1,10 +1,11 @@
 import axios from 'axios';
+import {lean} from '../../../config/leanid';
 
 const config = {
     baseURL:'https://api.leancloud.cn/1.1/classes',
     headers:{
-        'X-LC-Id':'LyfJraLkUWELBXzlcWJnEgkR',
-        'X-LC-Key':'XzJ6v4UjNBHT1pSUkWpRaozQ',
+        'X-LC-Id':lean.id,
+        'X-LC-Key':lean.key,
         'Content-Type':'application/json'
     }
 };

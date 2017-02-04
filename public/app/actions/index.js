@@ -11,10 +11,11 @@ export const ADD_MEMO = 'ADD_MEMO';
 export const SWITCH_TODO_MEMO = 'SWITCH_TODO_MEMO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 
-export const addTodo = (text) => {
+export const addTodo = (text,completed) => {
     return {
         type: ADD_TODO,
-        text
+        text,
+        completed
     };
 };
 export const addMemo = (title,text) => {
@@ -46,7 +47,7 @@ export const getTodos = (usrId) => {
     };
 };
 
-export const receivedTodos = (usrId,data) => {
+export const receivedTodos = (data) => {
     return {
         type: RECEIVED_TODOS,
         data: data,
@@ -60,7 +61,8 @@ export const fetchTodos = (usrId) => {
         const todo = getFromUsrId(usrId);
         return todo.get('memoList')
                     .then(
-                        response => dispatch(receivedTodos(usrId,response.data.results))
+                        response => dispatch(receivedTodos(response.data.results))
+                        //response => dispatch(receivedTodos([]))
                     );
    };
 };

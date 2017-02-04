@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress} from 'material-ui';
-import {fetchTodos} from '../actions';
+import {ADD_TODO,
+        fetchTodos,addTodo} from '../actions';
 import TodoView from '../components/TodoView';
 import AddTodoView from '../components/AddTodoView';
+import EmptyView from '../components/EmptyView';
 
 const styles = {
     list:{
@@ -27,14 +29,17 @@ class TodoApp extends Component{
         dispatch(fetchTodos(id));
     }
     render(){
-        const {load,data,expanded,onAddClick} = this.props;
+        const {load,data,expanded,onAddClick,onSaveClick} = this.props;
+        const empty = (data.length === 0);
         return (
                 <div style={styles.list}>
-                    <AddTodoView style={styles.addBlock}
-                        expanded={expanded} onAddClick={onAddClick} />
-                {load?
-                    <TodoView data={data}/> :
-                    <CircularProgress size={120} thickness={5} style={styles.wait} />}
+                    <AddTodoView expanded={expanded}
+                                 onAddClick={onAddClick}
+                                 onSaveClick={onSaveClick}/>
+                    {load?
+                     (empty?<EmptyView />:<TodoView data={data}/>):
+                        <CircularProgress size={120} thickness={5} style={styles.wait} />
+                    }
                 </div>
         );
     }
@@ -47,4 +52,13 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(TodoApp);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch:dispatch,
+        onSaveClick:(text,completed) => {
+            dispatch(addTodo(text,completed));
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TodoApp);

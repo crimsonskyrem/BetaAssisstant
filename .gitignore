@@ -1,6 +1,7 @@
 #leancloud
 .leancloud/
 .leanignore
+config/leanid.js
 
 # wechat config
 config/wechat.js

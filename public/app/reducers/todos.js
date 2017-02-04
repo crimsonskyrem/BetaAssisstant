@@ -1,5 +1,5 @@
-import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,
-        fetchTodos,} from '../actions';
+import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS
+        } from '../actions';
 
 const initialState = {
     load:false,
@@ -17,10 +17,11 @@ const todo = (state = initialState, action) => {
         });
     case ADD_TODO:
         return Object.assign({}, state, {
-            data:[
-                    ...state.data,
-                    {text: action.text,
-                    completed: false}
+            data:[{objectId: 'fakeone',
+                   content: action.text,
+                   createdAt: Date.now(),
+                   completed: action.completed},
+                   ...state.data
                 ]
         });
     case TOGGLE_TODO:
@@ -41,8 +42,9 @@ const todos = (state = initialState, action) => {
     switch (action.type) {
     case GET_TODOS:
     case RECEIVED_TODOS:
-    case ADD_TODO:
         return todo(undefined, action);
+    case ADD_TODO:
+        return todo(state, action);
     case TOGGLE_TODO:
         return state.map(t =>
                     todo(t, action));

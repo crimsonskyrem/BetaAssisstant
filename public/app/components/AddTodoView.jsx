@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Card,CardText,CardActions,TextField,Checkbox,RaisedButton} from 'material-ui';
 
 const styles = {
+    textField:{
+        textAlign:'left'
+    },
     block:{
         overflow:'auto',
         paddingButtom:'5px'
@@ -21,12 +24,12 @@ class AddTodoView extends Component{
         super();
         this.state = {
             todoText:'',
-            finished:false
+            completed:false
         }
     }
     checkBox(event,checked){
         this.setState({
-            finished:checked
+            completed:checked
         });
     }
     textChange(event,newVal){
@@ -34,13 +37,23 @@ class AddTodoView extends Component{
             todoText:newVal
         });
     }
+    onClick(){
+        const {onAddClick,onSaveClick} = this.props;
+        onSaveClick(this.state.todoText,this.state.completed);
+        this.setState({
+                    todoText:'',
+                    completed:false
+                });
+        onAddClick(true);
+    }
 
     render(){
-        const {expanded,onAddClick} = this.props;
+        const {expanded} = this.props;
         return (
                 <Card expanded={expanded}>
                     <CardText expandable={true}>
                     <TextField
+                        style={styles.textField}
                         value={this.state.todoText}
                         floatingLabelText="Type your todos here"
                         hintText="MultiLine with rows: 2 and rowsMax: 4"
@@ -54,14 +67,14 @@ class AddTodoView extends Component{
                     <CardActions expandable={true}
                                  style={styles.block}>
                     <Checkbox   style={styles.checkBox}
-                                label="Finished"
+                                label="Completed"
                                 labelPosition="left"
-                                checked={this.state.finished}
+                                checked={this.state.completed}
                                 onCheck={this.checkBox.bind(this)}
                     />
                     <RaisedButton label="Save"
                                   style={styles.button}
-                                  onClick={()=>onAddClick(expanded)}/>
+                                  onClick={this.onClick.bind(this)}/>
                     </CardActions>
                 </Card>
         );

@@ -13,11 +13,12 @@ const styles = {
 };
 
 
-class Todos extends Component{
+class TodoView extends Component{
     render(){
         const {data} = this.props;
         const Lists = data.map((value)=>
-            <ListItem primaryText={value.content}
+            <ListItem key={value.objectId}
+                      primaryText={value.content}
                       secondaryText={value.createdAt}
                       style={styles.span}
                       rightIcon={<ActionQueryBuilder />} />
@@ -29,4 +30,4 @@ class Todos extends Component{
         );
     }
 }
-export default Todos;
+export default TodoView;
