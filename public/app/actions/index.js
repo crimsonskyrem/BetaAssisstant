@@ -1,45 +1,23 @@
-import axios from 'axios';
+import {getFromUsrId} from './restApi';
 
-const TODO = 'TODO';
-const MEMO = 'MEMO';
-const GET_TODOS = 'GET_TODOS';
-const GET_MEMOS = 'GET_MEMOS';
-const RECEIVED_TODOS = 'RECEIVED_TODOS';
-const ADD_BUTTON_CLICK = 'ADD_BUTTON_CLICK';
-const ADD_TODO = 'ADD_TODO';
-const ADD_MEMO = 'ADD_MEMO';
-const SWITCH_TODO_MEMO = 'SWITCH_TODO_MEMO';
-const TOGGLE_TODO = 'TOGGLE_TODO';
+export const TODO = 'TODO';
+export const MEMO = 'MEMO';
+export const GET_TODOS = 'GET_TODOS';
+export const GET_MEMOS = 'GET_MEMOS';
+export const RECEIVED_TODOS = 'RECEIVED_TODOS';
+export const ADD_BUTTON_CLICK = 'ADD_BUTTON_CLICK';
+export const ADD_TODO = 'ADD_TODO';
+export const ADD_MEMO = 'ADD_MEMO';
+export const SWITCH_TODO_MEMO = 'SWITCH_TODO_MEMO';
+export const TOGGLE_TODO = 'TOGGLE_TODO';
 
-const api = restful('https://api.leancloud.cn/1.1/classes', fetchBackend(fetch));
-        api.header('X-LC-Id','LyfJraLkUWELBXzlcWJnEgkR');
-        api.header('X-LC-Key','XzJ6v4UjNBHT1pSUkWpRaozQ');
-api.header('Content-Type','application/json');
-const todos = api.all('memoList');
-//                 .header('X-LC-Key','XzJ6v4UjNBHT1pSUkWpRaozQ')
-//                 .header('Content-Type','application/json')
-const config = {
-    baseURL:'https://api.leancloud.cn/1.1/classes',
-    headers:{
-        'X-LC-Id':'LyfJraLkUWELBXzlcWJnEgkR',
-        'X-LC-Key':'XzJ6v4UjNBHT1pSUkWpRaozQ',
-        'Content-Type':'application/json'
-    },
-    params: {
-        where: '{"userId":"osEijvyh3bbYNYSPjORKAoDngtO0"}'
-    }
-};
-const todo = axios.create(config);
-
-
-
-const addTodo = (text) => {
+export const addTodo = (text) => {
     return {
         type: ADD_TODO,
         text
     };
 };
-const addMemo = (title,text) => {
+export const addMemo = (title,text) => {
     return {
         type: ADD_MEMO,
         titile,
@@ -47,29 +25,28 @@ const addMemo = (title,text) => {
     };
 };
 
-const switchTodoMemo = (view) => {
+export const switchTodoMemo = (view) => {
     return {
         type: SWITCH_TODO_MEMO,
         view
     };
 };
 
-const addButtonClick = (addExpanded) => {
+export const addButtonClick = (addExpanded) => {
     return {
         type:ADD_BUTTON_CLICK,
         addExpanded
     };
 };
 
-const getTodos = (usrId) => {
+export const getTodos = (usrId) => {
     return {
         type: GET_TODOS,
         usrId
     };
 };
 
-const receivedTodos = (usrId,data) => {
-    console.log(data);
+export const receivedTodos = (usrId,data) => {
     return {
         type: RECEIVED_TODOS,
         data: data,
@@ -77,9 +54,10 @@ const receivedTodos = (usrId,data) => {
     };
 };
 
-const fetchTodos = (usrId) => {
+export const fetchTodos = (usrId) => {
     return dispatch => {
         dispatch(getTodos(usrId));
+        const todo = getFromUsrId(usrId);
         return todo.get('memoList')
                     .then(
                         response => dispatch(receivedTodos(usrId,response.data.results))
@@ -87,21 +65,17 @@ const fetchTodos = (usrId) => {
    };
 };
 
-const getMemos = (usrId) => {
+export const getMemos = (usrId) => {
     return {
         type: GET_MEMOS,
         usrId
     };
 };
 
-const toggleTodo = (id) => {
+export const toggleTodo = (id) => {
     return {
         type: TOGGLE_TODO,
         id
     };
 };
 
-export {TODO,MEMO,ADD_TODO,ADD_MEMO,SWITCH_TODO_MEMO,TOGGLE_TODO,
-        GET_TODOS,GET_MEMOS,RECEIVED_TODOS,ADD_BUTTON_CLICK,
-        getTodos,receivedTodos,fetchTodos,addButtonClick,
-        addTodo,addMemo,switchTodoMemo,toggleTodo};

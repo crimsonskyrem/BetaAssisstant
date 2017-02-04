@@ -6,7 +6,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Memos from './Memos';
 import TodoApp from '../containers/TodoApp';
 import {TODO} from '../actions';
-import AddTodo from './AddTodo';
 
 
 class CombineView extends Component{
@@ -28,10 +27,8 @@ class CombineView extends Component{
                     onRightIconButtonTouchTap={()=>onAddClick(addExpanded)}
                 />
                {view == TODO ?
-                <div>
-                    <AddTodo expanded={addExpanded} toggle={onAddClick}/>
-                    <TodoApp id={id} />
-                </div>:
+                    <TodoApp id={id} expanded={addExpanded} onAddClick={onAddClick}/>
+                    :
                     <Memos id={id} />
                 }
             </div>

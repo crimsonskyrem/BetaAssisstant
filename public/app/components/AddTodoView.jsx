@@ -16,7 +16,7 @@ const styles = {
     }
 };
 
-class AddTodo extends Component{
+class AddTodoView extends Component{
     constructor(){
         super();
         this.state = {
@@ -36,7 +36,7 @@ class AddTodo extends Component{
     }
 
     render(){
-        const {expanded,toggle} = this.props;
+        const {expanded,onAddClick} = this.props;
         return (
                 <Card expanded={expanded}>
                     <CardText expandable={true}>
@@ -61,11 +61,11 @@ class AddTodo extends Component{
                     />
                     <RaisedButton label="Save"
                                   style={styles.button}
-                                  onClick={()=>toggle(expanded)}/>
+                                  onClick={()=>onAddClick(expanded)}/>
                     </CardActions>
                 </Card>
         );
     }
 }
 
-export default AddTodo;
+export default AddTodoView;
