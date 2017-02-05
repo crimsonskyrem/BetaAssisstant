@@ -1,14 +1,24 @@
 import React, {Component} from 'react';
-import {List, ListItem} from 'material-ui/List';
-import ActionQueryBuilder from 'material-ui/svg-icons/action/query-builder';
-import ActionDone from 'material-ui/svg-icons/action/done';
+import {List, ListItem,IconButton,IconMenu,MenuItem} from 'material-ui';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import ActionSchedule from 'material-ui/svg-icons/action/schedule';
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
 import Stagger from 'react-css-stagger';
 import '../css/card.scss';
 
 const styles = {
     span:{
         textAlign: 'left',
-        wordBreak:'break-word'
+        wordBreak:'break-word',
+        backgroundColor:'snow',
+        margin:'2px 0'
+    },
+    spanWithOpacity:{
+        textAlign: 'left',
+        wordBreak:'break-word',
+        backgroundColor:'snow',
+        margin:'2px 0',
+        opacity:'0.5'
     }
 };
 
@@ -23,17 +33,37 @@ const timeTransfer = (str) => {
 
 class TodoView extends Component{
     render(){
-        const {data} = this.props;
-        const Lists = data.map((value)=>
-            <ListItem key={value.uuid}
-                      style={{opacity:value.processing?'0.5':'1'}}
-                      primaryText={value.content}
-                      secondaryText={timeTransfer(value.updatedAt)}
-                      style={styles.span}
-                      rightIcon={value.completed?
-                                 <ActionDone />:
-                                 <ActionQueryBuilder />} />
-       );
+        const {data,onToggleTodo} = this.props;
+        const Lists = data.map((value)=> {
+            const opacity = value.processing || false;
+            const leftIcon = value.completed?
+                                        <ActionCheckCircle />:
+                                        <ActionSchedule />;
+            const iconButtonElement = (
+            <IconButton touch={true} >
+                <MoreVertIcon />
+            </IconButton>
+            );
+
+            const rightIconMenu = (
+            <IconMenu iconButtonElement={iconButtonElement}>
+                <MenuItem onTouchTap={()=>onToggleTodo(value.uuid)}>
+                    {value.completed?'设为未完成':'设为已完成'}
+                </MenuItem>
+                <MenuItem>编辑</MenuItem>
+                <MenuItem>删除</MenuItem>
+            </IconMenu>
+            );
+
+            return <ListItem
+            key={value.uuid}
+            primaryText={value.content}
+            secondaryText={timeTransfer(value.updatedAt)}
+            style={opacity?styles.spanWithOpacity:styles.span}
+            leftIcon={leftIcon}
+            rightIconButton={rightIconMenu}
+            />
+       });
         return (
             <Stagger transition="card" delay={100}>
                 {Lists}

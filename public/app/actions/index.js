@@ -13,6 +13,20 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const ADD_TODO_SUCC = 'ADD_TODO_SUCC';
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
 
+export const switchTodoMemo = (view) => {
+    return {
+        type: SWITCH_TODO_MEMO,
+        view
+    };
+};
+
+export const addButtonClick = (addExpanded) => {
+    return {
+        type:ADD_BUTTON_CLICK,
+        addExpanded
+    };
+};
+
 export const saveTodo = (data) => {
     return dispatch => {
         dispatch(addTodo(data));
@@ -35,7 +49,8 @@ export const addTodo = (data) => {
         content:data.content,
         completed:data.completed,
         uuid:data.uuid,
-        usrId:data.usrId
+        usrId:data.usrId,
+        processing:true
     };
 };
 
@@ -57,25 +72,16 @@ export const addTodoFail = (data) => {
     };
 };
 
-export const addMemo = (title,text) => {
-    return {
-        type: ADD_MEMO,
-        titile,
-        text
-    };
-};
-
-export const switchTodoMemo = (view) => {
-    return {
-        type: SWITCH_TODO_MEMO,
-        view
-    };
-};
-
-export const addButtonClick = (addExpanded) => {
-    return {
-        type:ADD_BUTTON_CLICK,
-        addExpanded
+export const fetchTodos = (usrId) => {
+    return dispatch => {
+        dispatch(getTodos(usrId));
+        const todo = getFromUsrId(usrId);
+        return todo.get('todoList')
+            .then(
+                response => dispatch(receivedTodos(response.data.results))
+            ).catch(
+                err => dispatch(receivedTodos([]))
+            );
     };
 };
 
@@ -94,13 +100,6 @@ export const receivedTodos = (data) => {
     };
 };
 
-export const getMemos = (usrId) => {
-    return {
-        type: GET_MEMOS,
-        usrId
-    };
-};
-
 export const toggleTodo = (uuid) => {
     return {
         type: TOGGLE_TODO,
@@ -108,16 +107,17 @@ export const toggleTodo = (uuid) => {
     };
 };
 
-export const fetchTodos = (usrId) => {
-    return dispatch => {
-        dispatch(getTodos(usrId));
-        const todo = getFromUsrId(usrId);
-        return todo.get('todoList')
-            .then(
-                response => dispatch(receivedTodos(response.data.results))
-            ).catch(
-                err => dispatch(receivedTodos([]))
-            );
+export const addMemo = (title,text) => {
+    return {
+        type: ADD_MEMO,
+        titile,
+        text
     };
 };
 
+export const getMemos = (usrId) => {
+    return {
+        type: GET_MEMOS,
+        usrId
+    };
+};

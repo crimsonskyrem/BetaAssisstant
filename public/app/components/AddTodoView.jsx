@@ -62,8 +62,8 @@ class AddTodoView extends Component{
                     <TextField
                         style={styles.textField}
                         value={this.state.content}
-                        floatingLabelText="Type your todos here"
-                        hintText="MultiLine with rows: 2 and rowsMax: 4"
+                        floatingLabelText="请在此输入您的代办事项"
+                        hintText="输入的文字不宜过多，记事请转入备忘录"
                         multiLine={true}
                         fullWidth={true}
                         rows={2}
@@ -74,12 +74,12 @@ class AddTodoView extends Component{
                     <CardActions expandable={true}
                                  style={styles.block}>
                     <Checkbox   style={styles.checkBox}
-                                label="Completed"
+                                label={this.state.completed?'已完成':'未完成'}
                                 labelPosition="left"
                                 checked={this.state.completed}
                                 onCheck={this.checkBox.bind(this)}
                     />
-                    <RaisedButton label="Save"
+                    <RaisedButton label="保存"
                                   style={styles.button}
                                   onClick={this.onClick.bind(this)}/>
                     </CardActions>

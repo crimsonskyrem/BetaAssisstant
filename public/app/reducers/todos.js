@@ -17,10 +17,13 @@ const todo = (state = initialState, action) => {
         });
     case ADD_TODO:
         return Object.assign({}, state, {
-            data:[{uuid: action.uuid,
-                   usrId: action.usrId,
-                   content: action.content,
-                   completed: action.completed},
+            data:[{
+                    uuid: action.uuid,
+                    usrId: action.usrId,
+                    content: action.content,
+                    completed: action.completed,
+                    processing: action.processing
+                  },
                    ...state.data
                 ]
         });

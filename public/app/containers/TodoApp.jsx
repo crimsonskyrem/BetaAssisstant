@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress} from 'material-ui';
 import {ADD_TODO,
-        fetchTodos,saveTodo} from '../actions';
+        fetchTodos,saveTodo,toggleTodo} from '../actions';
 import TodoView from '../components/TodoView';
 import AddTodoView from '../components/AddTodoView';
 import EmptyView from '../components/EmptyView';
@@ -29,7 +29,7 @@ class TodoApp extends Component{
         dispatch(fetchTodos(usrId));
     }
     render(){
-        const {load,data,expanded,onAddClick,onSaveClick,usrId} = this.props;
+        const {load,data,expanded,onAddClick,onSaveClick,onToggleTodo,usrId} = this.props;
         const empty = (data.length === 0);
         return (
                 <div style={styles.list}>
@@ -38,7 +38,7 @@ class TodoApp extends Component{
                                  onAddClick={onAddClick}
                                  onSaveClick={onSaveClick}/>
                     {load?
-                     (empty?<EmptyView />:<TodoView data={data}/>):
+                     (empty?<EmptyView />:<TodoView data={data} onToggleTodo={onToggleTodo}/>):
                         <CircularProgress size={120} thickness={5} style={styles.wait} />
                     }
                 </div>
@@ -58,6 +58,9 @@ const mapDispatchToProps = (dispatch) => {
         dispatch:dispatch,
         onSaveClick:(data) => {
             dispatch(saveTodo(data));
+        },
+        onToggleTodo:(uuid) => {
+            dispatch(toggleTodo(uuid));
         }
     }
 }

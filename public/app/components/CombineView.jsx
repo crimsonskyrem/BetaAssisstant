@@ -17,8 +17,8 @@ class CombineView extends Component{
             <div>
                 <AppBar
                     title={view == TODO ?
-                                <span >TodoList</span>:
-                                <span >MemoList</span>}
+                                <span >待办事项</span>:
+                                <span >备忘录</span>}
                     iconElementLeft={view == TODO ?
                                         <IconButton><DateRange /></IconButton>:
                                         <IconButton><Assignment /></IconButton>}
