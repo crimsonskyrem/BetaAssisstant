@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Card,CardText,CardActions,TextField,Checkbox,RaisedButton} from 'material-ui';
+import v4 from 'uuid/v4';
 
 const styles = {
     textField:{
@@ -42,7 +43,8 @@ class AddTodoView extends Component{
         const data = {
             content:this.state.content,
             completed:this.state.completed,
-            usrId:usrId
+            usrId:usrId,
+            uuid:v4()
         }
         onSaveClick(data);
         this.setState({

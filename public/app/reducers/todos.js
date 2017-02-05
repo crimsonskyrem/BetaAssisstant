@@ -1,4 +1,4 @@
-import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS
+import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL
         } from '../actions';
 
 const initialState = {
@@ -12,27 +12,35 @@ const todo = (state = initialState, action) => {
         return state;
     case RECEIVED_TODOS:
         return Object.assign({}, state, {
-            data:action.data,
+            data:action.data.reverse(),
             load:true
         });
     case ADD_TODO:
         return Object.assign({}, state, {
-            data:[{objectId: 'fakeone',
+            data:[{uuid: action.uuid,
+                   usrId: action.usrId,
                    content: action.content,
-                   createdAt: Date.now(),
                    completed: action.completed},
                    ...state.data
                 ]
         });
     case TOGGLE_TODO:
-        if (state.id !== action.id) {
+        if (state.uuid !== action.uuid) {
             return state;
         }
 
         return Object.assign({}, state, {
             completed: !state.completed
         });
-
+    case ADD_TODO_SUCC:
+    case ADD_TODO_FAIL:
+        if (state.uuid !== action.uuid) {
+            return state;
+        }
+        return Object.assign({},state,{
+            updatedAt:action.updatedAt,
+            processing:action.processing
+        });
     default:
         return state;
     }
@@ -45,9 +53,13 @@ const todos = (state = initialState, action) => {
         return todo(undefined, action);
     case ADD_TODO:
         return todo(state, action);
+    case ADD_TODO_SUCC:
+    case ADD_TODO_FAIL:
     case TOGGLE_TODO:
-        return state.map(t =>
-                    todo(t, action));
+        return Object.assign({},state,{
+            data:state.data.map(item =>
+                                todo(item, action))
+        });
     default:
         return state;
     }

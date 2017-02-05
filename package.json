@@ -12,6 +12,7 @@
     "node",
     "LeanEngine",
     "express",
+    "react",
     "Weixin"
   ],
   "engines": {
@@ -38,6 +39,7 @@
     "redux-thunk": "^2.2.0",
     "request": "^2.69.0",
     "strformat": "0.0.7",
+    "uuid": "^3.0.1",
     "wechat": "^2.0.3",
     "wechat-api": "^1.24.0"
   },
