@@ -32,7 +32,7 @@ class Memos extends Component{
     componentDidMount(){
         const component = this;
         axios.post('/json', {
-            usr: component.props.id,
+            usr: component.props.usrId,
        }).then(function (response) {
             component.setState({
                 load:true,

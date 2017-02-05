@@ -38,10 +38,11 @@ class AddTodoView extends Component{
         });
     }
     onClick(){
-        const {onAddClick,onSaveClick} = this.props;
+        const {onAddClick,onSaveClick,usrId} = this.props;
         const data = {
             content:this.state.content,
-            completed:this.state.completed
+            completed:this.state.completed,
+            usrId:usrId
         }
         onSaveClick(data);
         this.setState({

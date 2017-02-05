@@ -25,15 +25,16 @@ class TodoApp extends Component{
         super();
     }
     componentDidMount(){
-        const {dispatch,id} = this.props;
-        dispatch(fetchTodos(id));
+        const {dispatch,usrId} = this.props;
+        dispatch(fetchTodos(usrId));
     }
     render(){
-        const {load,data,expanded,onAddClick,onSaveClick} = this.props;
+        const {load,data,expanded,onAddClick,onSaveClick,usrId} = this.props;
         const empty = (data.length === 0);
         return (
                 <div style={styles.list}>
-                    <AddTodoView expanded={expanded}
+                    <AddTodoView usrId={usrId}
+                                 expanded={expanded}
                                  onAddClick={onAddClick}
                                  onSaveClick={onSaveClick}/>
                     {load?

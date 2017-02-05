@@ -11,7 +11,7 @@ import {TODO} from '../actions';
 class CombineView extends Component{
 
     render(){
-        const {view,addExpanded,id} = this.props;
+        const {view,addExpanded,usrId} = this.props;
         const {onSwitchClick,onAddClick} = this.props;
         return (
             <div>
@@ -27,9 +27,9 @@ class CombineView extends Component{
                     onRightIconButtonTouchTap={()=>onAddClick(addExpanded)}
                 />
                {view == TODO ?
-                    <TodoApp id={id} expanded={addExpanded} onAddClick={onAddClick}/>
+                    <TodoApp usrId={usrId} expanded={addExpanded} onAddClick={onAddClick}/>
                     :
-                    <Memos id={id} />
+                    <Memos usrId={usrId} />
                 }
             </div>
         );

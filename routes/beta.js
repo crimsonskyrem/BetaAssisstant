@@ -15,7 +15,7 @@ exports.deal = function(usr,content,cb) {
     }
     if(msg.match(/[fh]tt?ps?:\/\/[^ "]+/)){
         var link = AV.Object.new('links');
-        link.set('userId',usr);
+        link.set('usrId',usr);
         link.set('content',msg);
         link.save();
     }
@@ -41,7 +41,7 @@ function commandblk(usr,msg,cb){
         case 0:
         case 1:
             var que = new AV.Query('memoList');
-            que.equalTo('userId',usr);
+            que.equalTo('usrId',usr);
             if(content.length==1||things==""){
                 que.addDescending('updatedAt');
                 que.find().then(function(results){
@@ -77,7 +77,7 @@ function commandblk(usr,msg,cb){
                 cb(reply);
             }else{
                 var memo = AV.Object.new('memoList');
-                memo.set('userId',usr);
+                memo.set('usrId',usr);
                 memo.set('content',things);
                 memo.save().then(function(){
                     cb("您的备忘已添加");

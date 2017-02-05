@@ -1,4 +1,4 @@
-import {getFromUsrId,saveOnPost} from './restApi';
+import {basic,getFromUsrId} from './restApi';
 
 export const TODO = 'TODO';
 export const MEMO = 'MEMO';
@@ -84,9 +84,8 @@ export const fetchTodos = (usrId) => {
 export const saveTodo = (data) => {
     return dispatch => {
         dispatch(addTodo(data));
-        const todo = saveOnPost(data);
-        console.log(todo);
-        return todo('todoList').then(
+        const agent = basic();
+        return agent.post('todoList',{data:data}).then(
             response => {
                 console.log(response.data);
             }

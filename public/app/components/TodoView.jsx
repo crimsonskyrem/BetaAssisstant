@@ -12,6 +12,12 @@ const styles = {
     }
 };
 
+const timeTransfer = (str) => {
+    const tmp = new Date(str);
+    let arr = [tmp.getFullYear(),tmp.getMonth(),tmp.getDate(),tmp.getHours(),tmp.getMinutes()];
+    return `${arr[0]}年${arr[1]}月${arr[2]}日 ${arr[3]}时${arr[4]}分`;
+}
+
 
 class TodoView extends Component{
     render(){
@@ -19,7 +25,7 @@ class TodoView extends Component{
         const Lists = data.map((value)=>
             <ListItem key={value.objectId}
                       primaryText={value.content}
-                      secondaryText={value.createdAt}
+                      secondaryText={timeTransfer(value.createdAt)}
                       style={styles.span}
                       rightIcon={<ActionQueryBuilder />} />
        );

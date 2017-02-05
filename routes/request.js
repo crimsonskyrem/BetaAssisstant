@@ -4,7 +4,7 @@ exports.request = function(req, res){
     const usr = req.body.usr;
     const view = req.body.view=='TODO'?'todoList':'memoList';
     const que = new av.Query(view);
-    que.equalTo('userId',usr);
+    que.equalTo('usrId',usr);
     que.addDescending('updatedAt');
     que.find().then(function(results){
         var arr = [];

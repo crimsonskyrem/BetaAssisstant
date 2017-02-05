@@ -10,20 +10,16 @@ const config = {
     }
 };
 
+export const basic = () => {
+    return axios.create(config);
+};
 
 export const getFromUsrId = (usrId) => {
     const newConfig = Object.assign({},config,{
         params:{
-            where:`{"userId":"${usrId}"}`
+            where:`{"usrId":"${usrId}"}`
         }
     });
     return axios.create(newConfig);
 };
 
-export const saveOnPost= (data) => {
-    const newConfig = Object.assign({},config,{
-        method:'post',
-        data:data
-    });
-    return axios.create(newConfig);
-};

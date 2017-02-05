@@ -9,7 +9,7 @@ ReactDOM.render(
     (
         <Router history={hashHistory}>
             <Route path="/" component={IndexHello} />
-            <Route path="/usr/:id" component={Usr} />
+            <Route path="/usr/:usrId" component={Usr} />
             <Route path="/*" component={NotFound}/>
         </Router>
     ),

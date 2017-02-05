@@ -20,7 +20,7 @@ class Usr extends Component{
         return (
             <Provider store = {store}>
                 <MuiThemeProvider>
-                    <CombineApp id={this.props.params.id} />
+                    <CombineApp usrId={this.props.params.usrId} />
                 </MuiThemeProvider>
             </Provider>
        );
