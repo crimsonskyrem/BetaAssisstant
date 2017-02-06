@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import todos from './todos';
+import todoReducer from './todoReducer';
 import memos from './memos';
 import switchTodoMemo from './switchTodoMemo';
 
 const usrReducer = combineReducers({
     switchTodoMemo,
-    todos,
+    todoReducer,
     memos
 });
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Paper,Avatar} from 'material-ui';
+import {Paper,Avatar,RaisedButton} from 'material-ui';
 
 const styles = {
     main:{
@@ -13,25 +13,28 @@ const styles = {
         margin: 'auto',
         textAlign: 'center',
         display: 'block'
-    },
+    }
 };
 const PaperCircle = () => (
         <Paper style={styles.paper} zDepth={2} circle={true} >
         <Avatar
-            src='./img/empty.jpg'
+            src='./img/fail.jpg'
             size={216}
         />
         </Paper>
 );
 
-class EmptyView extends Component{
+class FailView extends Component{
     render(){
         return (
             <div style={styles.main}>
                 <PaperCircle />
-                <h3>您的记录是空的汪！</h3>
+                <h3>加载数据失败了嗷呜！</h3>
+                <RaisedButton label="重试"
+                              primary={true}
+                              onClick={()=>window.location.reload()} />
             </div>
         );
     }
 }
-export default EmptyView;
+export default FailView;

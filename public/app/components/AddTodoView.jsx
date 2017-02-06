@@ -17,58 +17,37 @@ const styles = {
     },
     button:{
         float:'right',
+    },
+    bottom:{
+        borderBottom:'1px solid #eee',
+        marginBottom:'4px'
     }
 };
 
 class AddTodoView extends Component{
-    constructor(){
-        super();
-        this.state = {
-            content:'',
-            completed:false
+        render(){
+        const {expanded,usrId,addContent,addCompleted} = this.props;
+        const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick} = this.props;
+        const saveButtonClick = (usrId) => {
+                const data = {usrId:usrId,
+                              uuid:v4()};
+                onSaveClick(data);
+                onAddClick(true);
         }
-    }
-    checkBox(event,checked){
-        this.setState({
-            completed:checked
-        });
-    }
-    textChange(event,newVal){
-        this.setState({
-            content:newVal
-        });
-    }
-    onClick(){
-        const {onAddClick,onSaveClick,usrId} = this.props;
-        const data = {
-            content:this.state.content,
-            completed:this.state.completed,
-            usrId:usrId,
-            uuid:v4()
-        }
-        onSaveClick(data);
-        this.setState({
-                    content:'',
-                    completed:false
-                });
-        onAddClick(true);
-    }
 
-    render(){
-        const {expanded} = this.props;
         return (
-                <Card expanded={expanded}>
+                <Card expanded={expanded} style={styles.bottom}>
                     <CardText expandable={true}>
                     <TextField
                         style={styles.textField}
-                        value={this.state.content}
+                        value={addContent}
                         floatingLabelText="请在此输入您的代办事项"
                         hintText="输入的文字不宜过多，记事请转入备忘录"
                         multiLine={true}
                         fullWidth={true}
                         rows={2}
                         rowsMax={4}
-                        onChange={this.textChange.bind(this)}
+                        onChange={()=>onAddContentChange(e,content)}
                         />
                     </CardText>
                     <CardActions expandable={true}
@@ -76,12 +55,12 @@ class AddTodoView extends Component{
                     <Checkbox   style={styles.checkBox}
                                 label={this.state.completed?'已完成':'未完成'}
                                 labelPosition="left"
-                                checked={this.state.completed}
-                                onCheck={this.checkBox.bind(this)}
+                                checked={addCompleted}
+                                onCheck={()=>onAddCheckCompleted(e,completed)}
                     />
                     <RaisedButton label="保存"
                                   style={styles.button}
-                                  onClick={this.onClick.bind(this)}/>
+                                  onClick={()=>saveButtonClick(usrId)}/>
                     </CardActions>
                 </Card>
         );

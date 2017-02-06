@@ -1,9 +1,13 @@
-import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL
+import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL,FETCH_FAILED
         } from '../actions';
 
 const initialState = {
-    load:false,
-    data:[]
+    loading:true,
+    show:false,
+    fail:false,
+    data:[],
+    addContent:'',
+    addCompleted:false
 };
 
 const todo = (state = initialState, action) => {
@@ -13,7 +17,8 @@ const todo = (state = initialState, action) => {
     case RECEIVED_TODOS:
         return Object.assign({}, state, {
             data:action.data.reverse(),
-            load:true
+            loading:false,
+            show:true
         });
     case ADD_TODO:
         return Object.assign({}, state, {
@@ -49,11 +54,16 @@ const todo = (state = initialState, action) => {
     }
 };
 
-const todos = (state = initialState, action) => {
+const todoReducer = (state = initialState, action) => {
     switch (action.type) {
     case GET_TODOS:
     case RECEIVED_TODOS:
         return todo(undefined, action);
+    case FETCH_FAILED:
+        return Object.assign({},state,{
+            loading:false,
+            fail:true
+        });
     case ADD_TODO:
         return todo(state, action);
     case ADD_TODO_SUCC:
@@ -68,4 +78,4 @@ const todos = (state = initialState, action) => {
     }
 };
 
-export default todos;
+export default todoReducer;
