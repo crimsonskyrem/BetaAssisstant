@@ -47,16 +47,16 @@ class AddTodoView extends Component{
                         fullWidth={true}
                         rows={2}
                         rowsMax={4}
-                        onChange={()=>onAddContentChange(e,content)}
+                        onChange={onAddContentChange}
                         />
                     </CardText>
                     <CardActions expandable={true}
                                  style={styles.block}>
                     <Checkbox   style={styles.checkBox}
-                                label={this.state.completed?'已完成':'未完成'}
+                                label={addCompleted?'已完成':'未完成'}
                                 labelPosition="left"
                                 checked={addCompleted}
-                                onCheck={()=>onAddCheckCompleted(e,completed)}
+                                onCheck={onAddCheckCompleted}
                     />
                     <RaisedButton label="保存"
                                   style={styles.button}

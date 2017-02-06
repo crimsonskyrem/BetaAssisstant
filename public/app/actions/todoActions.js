@@ -12,17 +12,17 @@ export const FETCH_FAILED = 'FETCH_FAILED';
 export const ADD_CONTENT_CHANGE = 'ADD_CONTENT_CHANGE';
 export const ADD_CHECK_COMPLETED = 'ADD_CHECK_COMPLETED';
 
-export const addContentChange = (content) => {
+export const addContentChange = (addContent) => {
     return {
         type:ADD_CONTENT_CHANGE,
-        content
+        addContent
     };
 };
 
-export const addCheckCompleted = (completed) => {
+export const addCheckCompleted = (addCompleted) => {
     return {
         type:ADD_CHECK_COMPLETED,
-        completed
+        addCompleted
     };
 };
 

@@ -1,4 +1,5 @@
-import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL,FETCH_FAILED
+import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL,FETCH_FAILED,
+        ADD_CONTENT_CHANGE,ADD_CHECK_COMPLETED
         } from '../actions';
 
 const initialState = {
@@ -25,12 +26,14 @@ const todo = (state = initialState, action) => {
             data:[{
                     uuid: action.uuid,
                     usrId: action.usrId,
-                    content: action.content,
-                    completed: action.completed,
+                    content: state.addContent,
+                    completed: state.addCompleted,
                     processing: action.processing
                   },
                    ...state.data
-                ]
+                 ],
+            addCompleted:false,
+            addContent:''
         });
     case TOGGLE_TODO:
         if (state.uuid !== action.uuid) {
@@ -56,6 +59,14 @@ const todo = (state = initialState, action) => {
 
 const todoReducer = (state = initialState, action) => {
     switch (action.type) {
+    case ADD_CONTENT_CHANGE:
+        return Object.assign({},state,{
+            addContent:action.addContent
+        });
+    case ADD_CHECK_COMPLETED:
+        return Object.assign({},state,{
+            addCompleted:action.addCompleted
+        });
     case GET_TODOS:
     case RECEIVED_TODOS:
         return todo(undefined, action);

@@ -32,7 +32,7 @@ class TodoApp extends Component{
     }
     render(){
         const {usrId,expanded,addContent,addCompleted} = this.props;
-        const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick} = this.porps;
+        const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick} = this.props;
         const {loading,show,fail,data,onToggleTodo,} = this.props;
         const empty = ((data.length === 0) && show);
         return (
@@ -68,10 +68,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch:dispatch,
-        onAddContentChange:(e,content) =>
-            dispatch(addContentChange(content)),
-        onAddCheckCompleted:(e,completed) =>
-            dispatch(addCheckCompleted(completed)),
+        onAddContentChange:(e,addContent) =>
+            dispatch(addContentChange(addContent)),
+        onAddCheckCompleted:(e,addCompleted) =>
+            dispatch(addCheckCompleted(addCompleted)),
         onSaveClick:(data) =>
             dispatch(saveTodo(data)),
         onToggleTodo:(uuid) =>
