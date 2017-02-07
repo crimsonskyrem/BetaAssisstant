@@ -30,7 +30,9 @@ class AddTodoView extends Component{
         const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick} = this.props;
         const saveButtonClick = (usrId) => {
                 const data = {usrId:usrId,
-                              uuid:v4()};
+                              uuid:v4(),
+                              content:addContent,
+                              completed:addCompleted};
                 onSaveClick(data);
                 onAddClick(true);
         }
