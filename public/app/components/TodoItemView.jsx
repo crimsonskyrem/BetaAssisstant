@@ -38,7 +38,8 @@ const timeTransfer = (str) => {
 
 class TodoItemView extends Component{
     render(){
-        const {value,onToggleTodo} = this.props;
+        const {value,onToggleTodo,onDeleteTodo} = this.props;
+        if(value==undefined) return null;
         const opacity = value.processing || false;
         const leftIcon = value.completed?
                          <ActionCheckCircle />:
@@ -50,7 +51,7 @@ class TodoItemView extends Component{
         return (
             <SwipeableViews slideStyle={styles.slideContainer}>
                 <ListItem
-                    key={value.uuid}
+                    key={`li${value.uuid}`}
                     primaryText={value.content}
                     secondaryText={timeTransfer(value.updatedAt)}
                     style={opacity?Object.assign({},styles.span,styles.withOpacity):styles.span}
@@ -59,6 +60,7 @@ class TodoItemView extends Component{
                 <div style={styles.menu}>
                     <RaisedButton label={<ActionDelete color={fullWhite}/>}
                                   backgroundColor={red400}
+                                  onClick={()=>onDeleteTodo(value.uuid)}
                                   style={Object.assign({},styles.button,{minWidth:'140px'})} />
                     <RaisedButton label={buttonIcon}
                                   backgroundColor={buttonColor}

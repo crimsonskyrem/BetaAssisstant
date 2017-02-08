@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {CircularProgress} from 'material-ui';
+import {CircularProgress,Dialog,FlatButton} from 'material-ui';
 import {ADD_TODO,
         addContentChange,addCheckCompleted,
-        fetchTodos,saveTodo,toggleTodo} from '../actions';
+        fetchTodos,saveTodo,toggleTodo,deleteTodo,toggleTodoView} from '../actions';
 import TodoView from '../components/TodoView';
 import AddTodoView from '../components/AddTodoView';
 import EmptyView from '../components/EmptyView';
@@ -31,10 +31,20 @@ class TodoApp extends Component{
         dispatch(fetchTodos(usrId));
     }
     render(){
-        const {usrId,expanded,addContent,addCompleted} = this.props;
+        const {usrId,expanded,addContent,addCompleted,deleteOpen,deleteUuid} = this.props;
         const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick} = this.props;
-        const {loading,show,fail,data,onToggleTodo,} = this.props;
+        const {loading,show,fail,data,onToggleTodo,onDeleteTodo} = this.props;
         const empty = ((data.length === 0) && show);
+        const actions = [
+            <FlatButton
+                label="Cancel"
+                primary={true}
+            />,
+            <FlatButton
+                label="Discard"
+                primary={true}
+            />,
+            ];
         return (
                 <div style={styles.list}>
                     <AddTodoView usrId={usrId}
@@ -48,7 +58,16 @@ class TodoApp extends Component{
                     {loading?<CircularProgress size={120} thickness={5} style={styles.wait} />:''}
                     {empty?<EmptyView />:''}
                     {fail?<FailView />:''}
-                    {show?<TodoView data={data} onToggleTodo={onToggleTodo}/>:''}
+                    {show?<TodoView data={data}
+                                    onToggleTodo={onToggleTodo}
+                                    onDeleteTodo={onDeleteTodo} />:''}
+                <Dialog
+                        actions={actions}
+                        modal={false}
+                        open={deleteOpen}
+                        >
+                    Discard draft?
+                </Dialog>
                 </div>
         );
     }
@@ -61,7 +80,9 @@ const mapStateToProps = (state) => {
         fail:state.todoReducer.fail,
         data:state.todoReducer.data,
         addContent:state.todoReducer.addContent,
-        addCompleted:state.todoReducer.addCompleted
+        addCompleted:state.todoReducer.addCompleted,
+        deleteOpen:state.todoReducer.deleteOpen,
+        deleteUuid:state.todoReducer.deleteUuid
     };
 };
 
@@ -75,7 +96,9 @@ const mapDispatchToProps = (dispatch) => {
         onSaveClick:(data) =>
             dispatch(saveTodo(data)),
         onToggleTodo:(uuid) =>
-            dispatch(toggleTodo(uuid))
+            dispatch(toggleTodo(uuid)),
+        onDeleteTodo:(uuid) =>
+            dispatch(deleteTodo(uuid))
     }
 }
 

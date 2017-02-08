@@ -1,5 +1,5 @@
 import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL,FETCH_FAILED,
-        ADD_CONTENT_CHANGE,ADD_CHECK_COMPLETED
+        ADD_CONTENT_CHANGE,ADD_CHECK_COMPLETED,DELETE_TODO,TOGGLE_TODO_VIEW
         } from '../actions';
 
 const initialState = {
@@ -8,7 +8,9 @@ const initialState = {
     fail:false,
     data:[],
     addContent:'',
-    addCompleted:false
+    addCompleted:false,
+    deleteOpen:false,
+    deleteUuid:''
 };
 
 const todo = (state = initialState, action) => {
@@ -35,25 +37,32 @@ const todo = (state = initialState, action) => {
             addCompleted:false,
             addContent:''
         });
+   default:
+        return state;
+    }
+};
+
+const handleDataItem = (item = {},action) => {
+    switch(action.type){
     case TOGGLE_TODO:
-        if (state.uuid !== action.uuid) {
-            return state;
+        if (item.uuid !== action.uuid) {
+            return item;
         }
 
-        return Object.assign({}, state, {
-            completed: !state.completed
+        return Object.assign({}, item, {
+            completed: !item.completed
         });
     case ADD_TODO_SUCC:
     case ADD_TODO_FAIL:
-        if (state.uuid !== action.uuid) {
-            return state;
+        if (item.uuid !== action.uuid) {
+            return item;
         }
-        return Object.assign({},state,{
+        return Object.assign({},item,{
             updatedAt:action.updatedAt,
             processing:action.processing
         });
     default:
-        return state;
+        return item;
     }
 };
 
@@ -66,6 +75,10 @@ const todoReducer = (state = initialState, action) => {
     case ADD_CHECK_COMPLETED:
         return Object.assign({},state,{
             addCompleted:action.addCompleted
+        });
+    case TOGGLE_TODO_VIEW:
+        return Object.assign({},state,{
+            show:!state.show
         });
     case GET_TODOS:
     case RECEIVED_TODOS:
@@ -82,7 +95,11 @@ const todoReducer = (state = initialState, action) => {
     case TOGGLE_TODO:
         return Object.assign({},state,{
             data:state.data.map(item =>
-                                todo(item, action))
+                                handleDataItem(item, action))
+        });
+    case DELETE_TODO:
+        return Object.assign({},state,{
+            data:state.data.filter(item => item.uuid !== action.uuid)
         });
     default:
         return state;

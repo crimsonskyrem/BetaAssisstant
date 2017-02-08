@@ -6,6 +6,8 @@ export const RECEIVED_TODOS = 'RECEIVED_TODOS';
 export const ADD_BUTTON_CLICK = 'ADD_BUTTON_CLICK';
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const TOGGLE_TODO_VIEW = 'TOGGLE_TODO_VIEW';
+export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO_SUCC = 'ADD_TODO_SUCC';
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
 export const FETCH_FAILED = 'FETCH_FAILED';
@@ -119,3 +121,15 @@ export const toggleTodo = (uuid) => {
     };
 };
 
+export const deleteTodo = (uuid) => {
+    return {
+        type: DELETE_TODO,
+        uuid
+    };
+};
+
+export const toggleTodoView = () => {
+    return {
+        type: TOGGLE_TODO_VIEW
+    };
+};

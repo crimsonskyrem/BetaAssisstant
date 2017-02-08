@@ -4,12 +4,8 @@ import {StaggeredMotion,spring,presets} from 'react-motion';
 
 
 class TodoView extends Component{
-   willLeave() {
-    // triggered when c's gone. Keeping c until its width/height reach 0.
-    return {width: spring(0), height: spring(0)};
-    }
     render(){
-        const {data,onToggleTodo} = this.props;
+        const {data,onToggleTodo,onDeleteTodo} = this.props;
         const Lists = data.map((value)=>
             <TodoItemView value={value} onToggleTodo={onToggleTodo} />
         );
@@ -25,7 +21,7 @@ class TodoView extends Component{
             <div>
             {interpolatingStyles.map((style, i) =>
                 <div key={i} style={{position:'relative',left: style.left}}>
-                    <TodoItemView value={data[i]} onToggleTodo={onToggleTodo} />
+                    <TodoItemView value={data[i]} onToggleTodo={onToggleTodo} onDeleteTodo={onDeleteTodo} />
                 </div>)
             }
             </div>
