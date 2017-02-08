@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {CircularProgress} from 'material-ui';
 import {Card, CardActions, CardHeader,CardText} from 'material-ui/Card';
-import Stagger from 'react-css-stagger';
-import '../css/card.scss';
 import axios from 'axios';
 
 const styles = {
@@ -60,9 +58,7 @@ class Memos extends Component{
         return (
                 <div style={styles.list}>
                     {this.state.load?
-                        <Stagger transition="card" delay={100}>
-                            {CardList}
-                        </Stagger>:
+                        {CardList}:
                         <CircularProgress size={120} thickness={5} style={styles.wait} />
                     }
                 </div>

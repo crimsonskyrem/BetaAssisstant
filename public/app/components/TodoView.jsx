@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
 import TodoItemView from './TodoItemView';
-import Stagger from 'react-css-stagger';
-import '../css/card.scss';
-import {TransitionMotion,StaggeredMotion,spring,presets} from 'react-motion';
-
-
+import {StaggeredMotion,spring,presets} from 'react-motion';
 
 
 class TodoView extends Component{
@@ -19,7 +15,6 @@ class TodoView extends Component{
         );
         return (
         <StaggeredMotion
-        willLeave={{left:spring(-1000)}}
         defaultStyles={data.map((_,i)=>({left:-1000}))}
         styles={prevInterpolatedStyles => prevInterpolatedStyles.map((_, i) => {
             return i === 0
