@@ -2,21 +2,41 @@ import React, {Component} from 'react';
 import TodoItemView from './TodoItemView';
 import Stagger from 'react-css-stagger';
 import '../css/card.scss';
+import {TransitionMotion,StaggeredMotion,spring,presets} from 'react-motion';
 
 
 
 
 class TodoView extends Component{
+   willLeave() {
+    // triggered when c's gone. Keeping c until its width/height reach 0.
+    return {width: spring(0), height: spring(0)};
+    }
     render(){
         const {data,onToggleTodo} = this.props;
         const Lists = data.map((value)=>
             <TodoItemView value={value} onToggleTodo={onToggleTodo} />
         );
         return (
-            <Stagger transition="card" delay={100}>
-                {Lists}
-            </Stagger>
-        );
+        <StaggeredMotion
+        willLeave={{left:spring(-1000)}}
+        defaultStyles={data.map((_,i)=>({left:-1000}))}
+        styles={prevInterpolatedStyles => prevInterpolatedStyles.map((_, i) => {
+            return i === 0
+            ? {left: spring(0)}
+            : {left: spring(prevInterpolatedStyles[i - 1].left)}
+        })}>
+        {interpolatingStyles =>
+            <div>
+            {interpolatingStyles.map((style, i) =>
+                <div key={i} style={{position:'relative',left: style.left}}>
+                    <TodoItemView value={data[i]} onToggleTodo={onToggleTodo} />
+                </div>)
+            }
+            </div>
+        }
+        </StaggeredMotion>
+       );
     }
 }
 export default TodoView;
