@@ -2,13 +2,9 @@ import React, {Component} from 'react';
 import TodoItemView from './TodoItemView';
 import {StaggeredMotion,spring,presets} from 'react-motion';
 
-
 class TodoView extends Component{
     render(){
-        const {data,onToggleTodo,onDeleteTodo} = this.props;
-        const Lists = data.map((value)=>
-            <TodoItemView value={value} onToggleTodo={onToggleTodo} />
-        );
+        const {data,onToggleTodo,onDeleteTodo,onSwipeTodoTab} = this.props;
         return (
         <StaggeredMotion
         defaultStyles={data.map((_,i)=>({left:-1000}))}
@@ -21,7 +17,11 @@ class TodoView extends Component{
             <div>
             {interpolatingStyles.map((style, i) =>
                 <div key={i} style={{position:'relative',left: style.left}}>
-                    <TodoItemView value={data[i]} onToggleTodo={onToggleTodo} onDeleteTodo={onDeleteTodo} />
+                    <TodoItemView
+                        value={data[i]}
+                        onSwipeTodoTab={onSwipeTodoTab}
+                        onToggleTodo={onToggleTodo}
+                        onDeleteTodo={onDeleteTodo} />
                 </div>)
             }
             </div>

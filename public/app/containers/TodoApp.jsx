@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
 import {ADD_TODO,
         addContentChange,addCheckCompleted,
-        fetchTodos,saveTodo,toggleTodo,deleteTodo,toggleTodoView} from '../actions';
+        fetchTodos,saveTodo,toggleTodo,deleteTodo,toggleTodoView,swipeTodoTab} from '../actions';
 import TodoView from '../components/TodoView';
 import AddTodoView from '../components/AddTodoView';
 import EmptyView from '../components/EmptyView';
@@ -32,7 +32,7 @@ class TodoApp extends Component{
     }
     render(){
         const {usrId,expanded,addContent,addCompleted,deleteOpen,deleteUuid} = this.props;
-        const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick} = this.props;
+        const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick,onSwipeTodoTab} = this.props;
         const {loading,show,fail,data,onToggleTodo,onDeleteTodo} = this.props;
         const empty = ((data.length === 0) && show);
         const actions = [
@@ -59,6 +59,7 @@ class TodoApp extends Component{
                     {empty?<EmptyView />:''}
                     {fail?<FailView />:''}
                     {show?<TodoView data={data}
+                                    onSwipeTodoTab={onSwipeTodoTab}
                                     onToggleTodo={onToggleTodo}
                                     onDeleteTodo={onDeleteTodo} />:''}
                 <Dialog
@@ -95,6 +96,8 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(addCheckCompleted(addCompleted)),
         onSaveClick:(data) =>
             dispatch(saveTodo(data)),
+        onSwipeTodoTab:(uuid,tabIndex) =>
+            dispatch(swipeTodoTab(uuid,tabIndex)),
         onToggleTodo:(uuid) =>
             dispatch(toggleTodo(uuid)),
         onDeleteTodo:(uuid) =>

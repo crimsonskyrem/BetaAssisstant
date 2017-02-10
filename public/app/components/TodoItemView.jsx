@@ -38,7 +38,8 @@ const timeTransfer = (str) => {
 
 class TodoItemView extends Component{
     render(){
-        const {value,onToggleTodo,onDeleteTodo} = this.props;
+        const {value,onToggleTodo,onDeleteTodo,onSwipeTodoTab} = this.props;
+        const sv = this.refs.sv;
         if(value==undefined) return null;
         const opacity = value.processing || false;
         const leftIcon = value.completed?
@@ -49,7 +50,12 @@ class TodoItemView extends Component{
                          <ActionSchedule color={fullWhite}/>;
         const buttonColor = value.completed?lightGreen400:lightBlue400;
         return (
-            <SwipeableViews slideStyle={styles.slideContainer}>
+            <SwipeableViews index={value.tabIndex}
+                            ref='sv'
+                            onChangeIndex={(v)=> onSwipeTodoTab(value.uuid,v)}
+                            slideStyle={styles.slideContainer}
+                            >
+                <div>
                 <ListItem
                     key={`li${value.uuid}`}
                     primaryText={value.content}
@@ -57,14 +63,15 @@ class TodoItemView extends Component{
                     style={opacity?Object.assign({},styles.span,styles.withOpacity):styles.span}
                     leftIcon={leftIcon}
                 />
+                </div>
                 <div style={styles.menu}>
                     <RaisedButton label={<ActionDelete color={fullWhite}/>}
                                   backgroundColor={red400}
-                                  onClick={()=>onDeleteTodo(value.uuid)}
+                                  onClick={()=>{sv.setState({indexCurrent:0});onDeleteTodo(value.uuid);}}
                                   style={Object.assign({},styles.button,{minWidth:'140px'})} />
                     <RaisedButton label={buttonIcon}
                                   backgroundColor={buttonColor}
-                                  onClick={()=>onToggleTodo(value.uuid)}
+                                  onClick={()=> {onToggleTodo(value.uuid);sv.setState({indexCurrent:0});}}
                                   style={styles.button} />
                 </div>
             </SwipeableViews>

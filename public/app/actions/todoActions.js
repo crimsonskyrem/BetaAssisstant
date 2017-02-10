@@ -6,13 +6,14 @@ export const RECEIVED_TODOS = 'RECEIVED_TODOS';
 export const ADD_BUTTON_CLICK = 'ADD_BUTTON_CLICK';
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
-export const TOGGLE_TODO_VIEW = 'TOGGLE_TODO_VIEW';
+export const TOGGLE_TODO_VIEW = 'TOGGLE_TODO_VIEW'; //暂时没什么卵用
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO_SUCC = 'ADD_TODO_SUCC';
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
 export const FETCH_FAILED = 'FETCH_FAILED';
 export const ADD_CONTENT_CHANGE = 'ADD_CONTENT_CHANGE';
 export const ADD_CHECK_COMPLETED = 'ADD_CHECK_COMPLETED';
+export const SWIPE_TODO_TAB = 'SWIPE_TODO_TAB';
 
 export const addContentChange = (addContent) => {
     return {
@@ -128,7 +129,15 @@ export const deleteTodo = (uuid) => {
     };
 };
 
+export const swipeTodoTab = (uuid,tabIndex) => {
+    return {
+        type: SWIPE_TODO_TAB,
+        tabIndex
+    };
+};
+
 export const toggleTodoView = () => {
+    //暂时没什么卵用
     return {
         type: TOGGLE_TODO_VIEW
     };

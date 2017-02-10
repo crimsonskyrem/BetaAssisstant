@@ -1,5 +1,5 @@
 import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL,FETCH_FAILED,
-        ADD_CONTENT_CHANGE,ADD_CHECK_COMPLETED,DELETE_TODO,TOGGLE_TODO_VIEW
+        ADD_CONTENT_CHANGE,ADD_CHECK_COMPLETED,DELETE_TODO,TOGGLE_TODO_VIEW,SWIPE_TODO_TAB
         } from '../actions';
 
 const initialState = {
@@ -19,7 +19,7 @@ const todo = (state = initialState, action) => {
         return state;
     case RECEIVED_TODOS:
         return Object.assign({}, state, {
-            data:action.data.reverse(),
+            data:action.data.map(item => handleDataItem(item,action)).reverse(),
             loading:false,
             show:true
         });
@@ -30,7 +30,8 @@ const todo = (state = initialState, action) => {
                     usrId: action.usrId,
                     content: state.addContent,
                     completed: state.addCompleted,
-                    processing: action.processing
+                    processing: action.processing,
+                    tabIndex:0
                   },
                    ...state.data
                  ],
@@ -44,13 +45,24 @@ const todo = (state = initialState, action) => {
 
 const handleDataItem = (item = {},action) => {
     switch(action.type){
+    case RECEIVED_TODOS:
+        return Object.assign({},item,{
+            processing:false,
+            tabIndex:0
+        });
     case TOGGLE_TODO:
         if (item.uuid !== action.uuid) {
             return item;
         }
-
         return Object.assign({}, item, {
             completed: !item.completed
+        });
+    case SWIPE_TODO_TAB:
+        if (item.uuid !== action.uuid) {
+            return item;
+        }
+        return Object.assign({}, item, {
+            tabIndex: !item.tabIndex
         });
     case ADD_TODO_SUCC:
     case ADD_TODO_FAIL:
@@ -93,6 +105,7 @@ const todoReducer = (state = initialState, action) => {
     case ADD_TODO_SUCC:
     case ADD_TODO_FAIL:
     case TOGGLE_TODO:
+    case SWIPE_TODO_TAB:
         return Object.assign({},state,{
             data:state.data.map(item =>
                                 handleDataItem(item, action))
