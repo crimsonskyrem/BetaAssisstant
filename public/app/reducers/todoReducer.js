@@ -48,7 +48,7 @@ const handleDataItem = (item = {},action) => {
     case RECEIVED_TODOS:
         return Object.assign({},item,{
             processing:false,
-            tabIndex:0
+            tabIndex:0 //暂时没什么卵用
         });
     case TOGGLE_TODO:
         if (item.uuid !== action.uuid) {
@@ -58,6 +58,7 @@ const handleDataItem = (item = {},action) => {
             completed: !item.completed
         });
     case SWIPE_TODO_TAB:
+        //暂时没什么卵用
         if (item.uuid !== action.uuid) {
             return item;
         }
@@ -106,6 +107,7 @@ const todoReducer = (state = initialState, action) => {
     case ADD_TODO_FAIL:
     case TOGGLE_TODO:
     case SWIPE_TODO_TAB:
+        //暂时没什么卵用
         return Object.assign({},state,{
             data:state.data.map(item =>
                                 handleDataItem(item, action))
