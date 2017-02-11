@@ -71,7 +71,7 @@ class TodoItemView extends Component{
                                   style={Object.assign({},styles.button,{minWidth:'140px'})} />
                     <RaisedButton label={buttonIcon}
                                   backgroundColor={buttonColor}
-                                  onClick={()=> {onToggleTodo(value.uuid);sv.setState({indexCurrent:0});}}
+                                  onClick={()=> {onToggleTodo(value);sv.setState({indexCurrent:0});}}
                                   style={styles.button} />
                 </div>
             </SwipeableViews>

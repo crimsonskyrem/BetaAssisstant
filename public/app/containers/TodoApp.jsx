@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
 import {ADD_TODO,
         addContentChange,addCheckCompleted,
-        fetchTodos,saveTodo,toggleTodo,deleteTodo,toggleTodoView,swipeTodoTab} from '../actions';
+        fetchTodos,saveTodo,toggleTodo,deleteTodo,toggleDialogView,swipeTodoTab} from '../actions';
 import TodoView from '../components/TodoView';
 import AddTodoView from '../components/AddTodoView';
 import EmptyView from '../components/EmptyView';
@@ -37,11 +37,11 @@ class TodoApp extends Component{
         const empty = ((data.length === 0) && show);
         const actions = [
             <FlatButton
-                label="Cancel"
+                label="取消"
                 primary={true}
             />,
             <FlatButton
-                label="Discard"
+                label="删除"
                 primary={true}
             />,
             ];
@@ -66,8 +66,9 @@ class TodoApp extends Component{
                         actions={actions}
                         modal={false}
                         open={deleteOpen}
+                        onRequestClose={()=> onDeleteTodo('123')}
                         >
-                    Discard draft?
+                    确定要删除吗？
                 </Dialog>
                 </div>
         );
@@ -98,10 +99,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(saveTodo(data)),
         onSwipeTodoTab:(uuid,tabIndex) =>
             dispatch(swipeTodoTab(uuid,tabIndex)),
-        onToggleTodo:(uuid) =>
-            dispatch(toggleTodo(uuid)),
+        onToggleTodo:(data) =>
+            dispatch(toggleTodo(data)),
         onDeleteTodo:(uuid) =>
-            dispatch(deleteTodo(uuid))
+            dispatch(toggleDialogView(uuid))
     }
 }
 

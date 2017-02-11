@@ -6,7 +6,7 @@ export const RECEIVED_TODOS = 'RECEIVED_TODOS';
 export const ADD_BUTTON_CLICK = 'ADD_BUTTON_CLICK';
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
-export const TOGGLE_TODO_VIEW = 'TOGGLE_TODO_VIEW'; //暂时没什么卵用
+export const TOGGLE_DIALOG_VIEW = 'TOGGLE_DIALOG_VIEW';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO_SUCC = 'ADD_TODO_SUCC';
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
@@ -115,12 +115,27 @@ export const fetchFailed= (data) => {
     };
 };
 
-export const toggleTodo = (uuid) => {
+export const toggleTodo = (data) => {
+    return dispatch => {
+        dispatch(toggleTodoState(data.uuid));
+        const agent = basic();
+        return agent.put(`todoList/${data.objectId}`,{completed:!data.completed}).then(
+            response => console.log(response)
+        ).catch(
+            err => {
+                console.log(err);
+                dispatch(toggleTodoState(data.uuid));
+            }
+        );
+    };
+};
+
+export const toggleTodoState = (uuid) => {
     return {
         type: TOGGLE_TODO,
         uuid
     };
-};
+}
 
 export const deleteTodo = (uuid) => {
     return {
@@ -136,9 +151,9 @@ export const swipeTodoTab = (uuid,tabIndex) => {
     };
 };
 
-export const toggleTodoView = () => {
-    //暂时没什么卵用
+export const toggleDialogView = (uuid) => {
     return {
-        type: TOGGLE_TODO_VIEW
+        type: TOGGLE_DIALOG_VIEW,
+        uuid
     };
 };

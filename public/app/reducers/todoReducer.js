@@ -1,5 +1,5 @@
 import {ADD_TODO,TOGGLE_TODO,GET_TODOS,RECEIVED_TODOS,ADD_TODO_SUCC,ADD_TODO_FAIL,FETCH_FAILED,
-        ADD_CONTENT_CHANGE,ADD_CHECK_COMPLETED,DELETE_TODO,TOGGLE_TODO_VIEW,SWIPE_TODO_TAB
+        ADD_CONTENT_CHANGE,ADD_CHECK_COMPLETED,DELETE_TODO,TOGGLE_DIALOG_VIEW,SWIPE_TODO_TAB
         } from '../actions';
 
 const initialState = {
@@ -89,9 +89,9 @@ const todoReducer = (state = initialState, action) => {
         return Object.assign({},state,{
             addCompleted:action.addCompleted
         });
-    case TOGGLE_TODO_VIEW:
+    case TOGGLE_DIALOG_VIEW:
         return Object.assign({},state,{
-            show:!state.show
+            deleteOpen:!state.deleteOpen
         });
     case GET_TODOS:
     case RECEIVED_TODOS:
