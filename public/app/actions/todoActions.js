@@ -13,6 +13,7 @@ export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
 export const FETCH_FAILED = 'FETCH_FAILED';
 export const ADD_CONTENT_CHANGE = 'ADD_CONTENT_CHANGE';
 export const ADD_CHECK_COMPLETED = 'ADD_CHECK_COMPLETED';
+export const DELETE_TODO_FAILED = 'DELETE_TODO_FAILED';
 export const SWIPE_TODO_TAB = 'SWIPE_TODO_TAB';
 
 export const addContentChange = (addContent) => {
@@ -67,6 +68,7 @@ export const addTodoSucc = (data) => {
     return {
         type: ADD_TODO_SUCC,
         uuid:data.uuid,
+        objectId:data.objectId,
         updatedAt:data.createdAt,
         processing:false
     };
@@ -135,19 +137,34 @@ export const toggleTodoState = (uuid) => {
         type: TOGGLE_TODO,
         uuid
     };
-}
+};
 
 export const deleteTodo = (uuid) => {
-    return {
-        type: DELETE_TODO,
-        uuid
+    return dispatch => {
+        dispatch(toggleDialogView(uuid));
     };
 };
 
-export const swipeTodoTab = (uuid,tabIndex) => {
+export const confirmDeleteTodo = (objectId) => {
+    return dispatch => {
+        const agent = basic();
+        return agent.delete(`todoList/${objectId}`).then(
+            response => {
+                dispatch(deleteTodoState());
+                dispatch(toggleDialogView());
+            }
+        ).catch(
+            err => {
+                console.log(err);
+                dispatch(toggleDialogView());
+            }
+        );
+    };
+};
+
+export const deleteTodoState = () => {
     return {
-        type: SWIPE_TODO_TAB,
-        tabIndex
+        type: DELETE_TODO
     };
 };
 
@@ -155,5 +172,21 @@ export const toggleDialogView = (uuid) => {
     return {
         type: TOGGLE_DIALOG_VIEW,
         uuid
+    };
+};
+
+export const deleteTodoFail = (objectId) => {
+    return {
+        type: DELETE_TODO_FAILED,
+        updatedAt:'删除失败',
+        processing:true,
+        objectId
+    };
+};
+
+export const swipeTodoTab = (uuid,tabIndex) => {
+    return {
+        type: SWIPE_TODO_TAB,
+        tabIndex
     };
 };

@@ -46,9 +46,9 @@ class TodoItemView extends Component{
                          <ActionCheckCircle />:
                          <ActionSchedule />;
         const buttonIcon = value.completed?
-                         <ActionCheckCircle color={fullWhite}/>:
-                         <ActionSchedule color={fullWhite}/>;
-        const buttonColor = value.completed?lightGreen400:lightBlue400;
+                         <ActionSchedule color={fullWhite}/>:
+                         <ActionCheckCircle color={fullWhite}/>;
+        const buttonColor = value.completed?lightBlue400:lightGreen400;
         return (
             <SwipeableViews index={value.tabIndex}
                             ref='sv'
