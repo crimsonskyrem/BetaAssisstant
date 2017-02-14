@@ -1,4 +1,5 @@
 import {basic,getFromUsrId} from './restApi';
+import { FETCH_FAILED,fetchFailed } from './index';
 
 export const TODO = 'TODO';
 export const GET_TODOS = 'GET_TODOS';
@@ -10,7 +11,6 @@ export const TOGGLE_DIALOG_VIEW = 'TOGGLE_DIALOG_VIEW';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO_SUCC = 'ADD_TODO_SUCC';
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
-export const FETCH_FAILED = 'FETCH_FAILED';
 export const ADD_CONTENT_CHANGE = 'ADD_CONTENT_CHANGE';
 export const ADD_CHECK_COMPLETED = 'ADD_CHECK_COMPLETED';
 export const DELETE_TODO_FAILED = 'DELETE_TODO_FAILED';
@@ -108,12 +108,6 @@ export const receivedTodos = (data) => {
         type: RECEIVED_TODOS,
         data: data,
         receivedAt: Date.now()
-    };
-};
-
-export const fetchFailed= (data) => {
-    return {
-        type: FETCH_FAILED
     };
 };
 

@@ -1,9 +1,8 @@
 export * from './todoActions';
+export * from './memoActions';
 
-export const MEMO = 'MEMO';
-export const GET_MEMOS = 'GET_MEMOS';
-export const ADD_MEMO = 'ADD_MEMO';
 export const SWITCH_TODO_MEMO = 'SWITCH_TODO_MEMO';
+export const FETCH_FAILED = 'FETCH_FAILED';
 
 export const switchTodoMemo = (view) => {
     return {
@@ -12,17 +11,8 @@ export const switchTodoMemo = (view) => {
     };
 };
 
-export const addMemo = (title,text) => {
+export const fetchFailed= () => {
     return {
-        type: ADD_MEMO,
-        titile,
-        text
-    };
-};
-
-export const getMemos = (usrId) => {
-    return {
-        type: GET_MEMOS,
-        usrId
+        type: FETCH_FAILED
     };
 };

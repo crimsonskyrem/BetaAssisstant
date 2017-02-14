@@ -5,8 +5,9 @@ import {StaggeredMotion,spring,presets} from 'react-motion';
 class TodoView extends Component{
     render(){
         const {data,onToggleTodo,onDeleteTodo,onSwipeTodoTab} = this.props;
-        const Lists = data.map(item =>
+        const Lists = data.map((item,i) =>
                     <TodoItemView
+                        key={i}
                         value={item}
                         onSwipeTodoTab={onSwipeTodoTab}
                         onToggleTodo={onToggleTodo}

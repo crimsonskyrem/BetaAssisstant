@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import todoReducer from './todoReducer';
-import memos from './memos';
+import memoReducer from './memoReducer';
 import switchTodoMemo from './switchTodoMemo';
 
 const usrReducer = combineReducers({
     switchTodoMemo,
     todoReducer,
-    memos
+    memoReducer
 });
 
 export default usrReducer;

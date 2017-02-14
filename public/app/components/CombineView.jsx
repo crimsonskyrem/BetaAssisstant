@@ -5,6 +5,7 @@ import DateRange from 'material-ui/svg-icons/action/date-range';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Memos from './Memos';
 import TodoApp from '../containers/TodoApp';
+import MemoApp from '../containers/MemoApp';
 import {TODO} from '../actions';
 
 
@@ -29,7 +30,7 @@ class CombineView extends Component{
                {view == TODO ?
                     <TodoApp usrId={usrId} expanded={addExpanded} onAddClick={onAddClick}/>
                     :
-                    <Memos usrId={usrId} />
+                    <MemoApp usrId={usrId} />
                 }
             </div>
         );
