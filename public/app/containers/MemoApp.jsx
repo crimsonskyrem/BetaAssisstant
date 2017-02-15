@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
 import {fetchMemos} from '../actions';
 import MemoView from '../components/MemoView';
+import AddMemoView from '../components/AddMemoView';
 
 const styles = {
     list:{
@@ -23,10 +24,16 @@ class MemoApp extends Component{
         dispatch(fetchMemos(usrId));
     }
     render(){
-        const {data,loading,show,fail} = this.props;
+        const {usrId,expanded,view,data,loading,show,fail} = this.props;
+        const {onAddClick} = this.props;
         const empty = ((data.length === 0) && show);
         return (
             <div style={styles.list}>
+                <AddMemoView usrId={usrId}
+                             expanded={expanded}
+                             view={view}
+                             onAddClick={onAddClick}
+                             />
                 {loading?<CircularProgress size={120} thickness={5} style={styles.wait} />:''}
                 {empty?<EmptyView />:''}
                 {fail?<FailView />:''}

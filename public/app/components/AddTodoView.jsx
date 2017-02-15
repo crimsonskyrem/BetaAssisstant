@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Card,CardText,CardActions,TextField,Checkbox,RaisedButton} from 'material-ui';
+import {TODO} from '../actions';
 import v4 from 'uuid/v4';
 
 const styles = {
@@ -26,8 +27,9 @@ const styles = {
 
 class AddTodoView extends Component{
         render(){
-        const {expanded,usrId,addContent,addCompleted} = this.props;
+        const {expanded,view,usrId,addContent,addCompleted} = this.props;
         const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick} = this.props;
+        const addTodoExpand = (view == TODO && expanded);
         const saveButtonClick = (usrId) => {
                 const data = {usrId:usrId,
                               uuid:v4(),
@@ -38,7 +40,7 @@ class AddTodoView extends Component{
         }
 
         return (
-                <Card expanded={expanded} style={styles.bottom}>
+                <Card expanded={addTodoExpand} style={styles.bottom}>
                     <CardText expandable={true}>
                     <TextField
                         style={styles.textField}

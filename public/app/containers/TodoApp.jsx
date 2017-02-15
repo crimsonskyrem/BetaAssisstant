@@ -31,7 +31,7 @@ class TodoApp extends Component{
         dispatch(fetchTodos(usrId));
     }
     render(){
-        const {usrId,expanded,addContent,addCompleted,deleteOpen,deleteObjectId} = this.props;
+        const {usrId,expanded,view,addContent,addCompleted,deleteOpen,deleteObjectId} = this.props;
         const {onAddContentChange,onAddCheckCompleted,onAddClick,onSaveClick,onSwipeTodoTab} = this.props;
         const {loading,show,fail,data,onToggleTodo,onDeleteTodo,onToggleDeleteView,onConfirmDeleteTodo} = this.props;
         const empty = ((data.length === 0) && show);
@@ -50,6 +50,7 @@ class TodoApp extends Component{
         return (
                 <div style={styles.list}>
                     <AddTodoView usrId={usrId}
+                                 view={view}
                                  expanded={expanded}
                                  addContent={addContent}
                                  addCompleted={addCompleted}
