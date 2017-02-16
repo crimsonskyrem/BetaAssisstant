@@ -25,6 +25,7 @@ class MemoApp extends Component{
     }
     render(){
         const {usrId,expanded,view,data,loading,show,fail} = this.props;
+        const {addTitle,addContent,addTags,addMenuValue} = this.props;
         const {onAddClick} = this.props;
         const empty = ((data.length === 0) && show);
         return (
@@ -32,6 +33,10 @@ class MemoApp extends Component{
                 <AddMemoView usrId={usrId}
                              expanded={expanded}
                              view={view}
+                             addTitle={addTitle}
+                             addTags={addTags}
+                             addContent={addContent}
+                             addMenuValue={addMenuValue}
                              onAddClick={onAddClick}
                              />
                 {loading?<CircularProgress size={120} thickness={5} style={styles.wait} />:''}
@@ -52,6 +57,7 @@ const mapStateToProps = (state) => {
         addTitle:state.memoReducer.addTitle,
         addContent:state.memoReducer.addContent,
         addTags:state.memoReducer.addTags,
+        addMenuValue:state.memoReducer.addMenuValue,
         deleteOpen:state.memoReducer.deleteOpen,
         deleteObjectId:state.memoReducer.deleteObjectId
     };

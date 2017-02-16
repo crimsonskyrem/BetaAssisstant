@@ -5,6 +5,9 @@ export const MEMO = 'MEMO';
 export const GET_MEMOS = 'GET_MEMOS';
 export const RECEIVED_MEMOS = 'RECEIVED_MEMOS';
 export const ADD_MEMO = 'ADD_MEMO';
+export const ADD_MEMO_MENU_SAVE = 'ADD_MEMO_MENU_SAVE';
+export const ADD_MEMO_MENU_SELECT_TAG = 'ADD_MEMO_MENU_SELECT_TAG';
+export const ADD_MEMO_MENU_INPUT_TAG = 'ADD_MEMO_MENU_INPUT_TAG';
 
 export const fetchMemos = (usrId) => {
     return dispatch => {

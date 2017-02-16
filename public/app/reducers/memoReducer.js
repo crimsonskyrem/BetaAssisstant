@@ -7,7 +7,8 @@ const initialState = {
     data:[],
     addTitle:'',
     addContent:'',
-    addTags:'',
+    addTags:[],
+    addMenuValue:'',
     deleteOpen:false,
     deleteObjectId:''
 };
