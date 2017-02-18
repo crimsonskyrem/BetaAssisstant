@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
-import {fetchMemos} from '../actions';
+import {fetchMemos,addMemoMenuOnTouch} from '../actions';
 import MemoView from '../components/MemoView';
 import AddMemoView from '../components/AddMemoView';
 
@@ -24,25 +24,15 @@ class MemoApp extends Component{
         dispatch(fetchMemos(usrId));
     }
     render(){
-        const {usrId,expanded,view,data,loading,show,fail} = this.props;
-        const {addTitle,addContent,addTags,addMenuValue} = this.props;
-        const {onAddClick} = this.props;
+        const {data,show,loading,fail} = this.props;
         const empty = ((data.length === 0) && show);
         return (
             <div style={styles.list}>
-                <AddMemoView usrId={usrId}
-                             expanded={expanded}
-                             view={view}
-                             addTitle={addTitle}
-                             addTags={addTags}
-                             addContent={addContent}
-                             addMenuValue={addMenuValue}
-                             onAddClick={onAddClick}
-                             />
+                <AddMemoView {...this.props} />
                 {loading?<CircularProgress size={120} thickness={5} style={styles.wait} />:''}
-                {empty?<EmptyView />:''}
-                {fail?<FailView />:''}
-                {show?<MemoView data={data}/>:''}
+                {empty?<EmptyView />:null}
+                {fail?<FailView />:null}
+                {show?<MemoView data={data}/>:null}
             </div>
         );
     }
@@ -65,8 +55,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatch:dispatch
+        dispatch:dispatch,
+        addMemoMenuOnTouch:(e,child) =>
+            dispatch(addMemoMenuOnTouch(child.props.value))
     }
 }
 
-export default connect(mapStateToProps)(MemoApp);
+export default connect(mapStateToProps,mapDispatchToProps)(MemoApp);

@@ -47,3 +47,13 @@ export const addMemo = (title,text) => {
     };
 };
 
+export const addMemoMenuOnTouch = (val) => {
+    if(val == ADD_MEMO_MENU_SAVE){
+        return {
+            type:ADD_MEMO_MENU_SAVE
+        };
+    }
+    return {
+        type:val
+    };
+};

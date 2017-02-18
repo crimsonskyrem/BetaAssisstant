@@ -1,4 +1,4 @@
-import { GET_MEMOS,RECEIVED_MEMOS } from '../actions';
+import { GET_MEMOS,RECEIVED_MEMOS,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG } from '../actions';
 
 const initialState = {
     loading:true,
@@ -30,6 +30,11 @@ const handleState = (state = initialState, action) => {
             loading:false,
             show:true
         });
+    case ADD_MEMO_MENU_INPUT_TAG:
+    case ADD_MEMO_MENU_SELECT_TAG:
+        return Object.assign({}, state, {
+            addMenuValue:action.type
+        });
     case GET_MEMOS:
     default:
         return state;
@@ -52,6 +57,9 @@ const memoReducer = (state = initialState, action) => {
     case GET_MEMOS:
     case RECEIVED_MEMOS:
         return handleState(undefined,action);
+    case ADD_MEMO_MENU_INPUT_TAG:
+    case ADD_MEMO_MENU_SELECT_TAG:
+        return handleState(state,action);
     default:
         return state;
     }
