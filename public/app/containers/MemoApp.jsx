@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
-import {fetchMemos,addMemoMenuOnTouch} from '../actions';
+import {fetchMemos,addMemoMenuOnTouch,addMemoTitleChange,addMemoContentChange} from '../actions';
 import MemoView from '../components/MemoView';
 import AddMemoView from '../components/AddMemoView';
 
@@ -57,7 +57,11 @@ const mapDispatchToProps = (dispatch) => {
     return {
         dispatch:dispatch,
         addMemoMenuOnTouch:(e,child) =>
-            dispatch(addMemoMenuOnTouch(child.props.value))
+            dispatch(addMemoMenuOnTouch(child.props.value)),
+        onAddMemoTitleChange:(e,title) =>
+            dispatch(addMemoTitleChange(title)),
+        onAddMemoContentChange:(e,content) =>
+            dispatch(addMemoContentChange(content))
     }
 }
 

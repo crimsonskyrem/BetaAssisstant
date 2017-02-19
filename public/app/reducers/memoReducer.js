@@ -1,6 +1,8 @@
-import { GET_MEMOS,RECEIVED_MEMOS,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG } from '../actions';
+import { GET_MEMOS,RECEIVED_MEMOS,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG,
+         ADD_MEMO_TITLE_CHANGE,ADD_MEMO_CONTENT_CHANGE
+       } from '../actions';
 
-const initialState = {
+const defaultState = {
     loading:true,
     show:false,
     fail:false,
@@ -12,6 +14,14 @@ const initialState = {
     deleteOpen:false,
     deleteObjectId:''
 };
+
+const savedState = JSON.parse(localStorage.getItem('memoAddState')) || defaultState;
+
+const initialState =  Object.assign({},defaultState,{
+    addTitle:savedState.addTitle,
+    addTags:savedState.addTags,
+    addContent:savedState.addContent
+});
 
 const initialItem = {
     title:'',
@@ -35,6 +45,19 @@ const handleState = (state = initialState, action) => {
         return Object.assign({}, state, {
             addMenuValue:action.type
         });
+    case ADD_MEMO_TITLE_CHANGE:
+        const newTitle =Object.assign({}, state, {
+            addTitle:action.title
+        });
+        localStorage.setItem('memoAddState', JSON.stringify(newTitle));
+        return newTitle;
+    case ADD_MEMO_CONTENT_CHANGE:
+        const newContent = Object.assign({}, state, {
+            addContent:action.content
+        });
+        localStorage.setItem('memoAddState', JSON.stringify(newContent));
+        return newContent;
+//        localStorage.removeItem(key);
     case GET_MEMOS:
     default:
         return state;
@@ -59,6 +82,8 @@ const memoReducer = (state = initialState, action) => {
         return handleState(undefined,action);
     case ADD_MEMO_MENU_INPUT_TAG:
     case ADD_MEMO_MENU_SELECT_TAG:
+    case ADD_MEMO_TITLE_CHANGE:
+    case ADD_MEMO_CONTENT_CHANGE:
         return handleState(state,action);
     default:
         return state;

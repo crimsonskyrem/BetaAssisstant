@@ -77,9 +77,8 @@ class AddMemoView extends Component{
     render(){
         const {expanded,view,usrId} = this.props;
         const {addTitle,addContent,addTags,addMenuValue} = this.props;
-        const {addMemoMenuOnTouch} = this.props;
+        const {addMemoMenuOnTouch,onAddMemoTitleChange,onAddMemoContentChange} = this.props;
         const addMemoExpand = (view == MEMO && expanded);
-        console.log(addMemoMenuOnTouch);
         return (
             <Card expanded={addMemoExpand} >
                 <CardText expandable={true}>
@@ -102,6 +101,8 @@ class AddMemoView extends Component{
                     </div>
                     <TextField
                         floatingLabelText="备忘标题"
+                        value={addTitle}
+                        onChange={onAddMemoTitleChange}
                         />
                     <TextField
                         floatingLabelText="备忘内容"
@@ -109,6 +110,8 @@ class AddMemoView extends Component{
                         multiLine={true}
                         rows={2}
                         rowsMax={6}
+                        value={addContent}
+                        onChange={onAddMemoContentChange}
                         />
                 </CardText>
             </Card>

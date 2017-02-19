@@ -8,6 +8,8 @@ export const ADD_MEMO = 'ADD_MEMO';
 export const ADD_MEMO_MENU_SAVE = 'ADD_MEMO_MENU_SAVE';
 export const ADD_MEMO_MENU_SELECT_TAG = 'ADD_MEMO_MENU_SELECT_TAG';
 export const ADD_MEMO_MENU_INPUT_TAG = 'ADD_MEMO_MENU_INPUT_TAG';
+export const ADD_MEMO_TITLE_CHANGE = 'ADD_MEMO_TITLE_CHANGE';
+export const ADD_MEMO_CONTENT_CHANGE = 'ADD_MEMO_CONTENT_CHANGE';
 
 export const fetchMemos = (usrId) => {
     return dispatch => {
@@ -39,14 +41,6 @@ export const receivedMemos = (data) => {
     };
 };
 
-export const addMemo = (title,text) => {
-    return {
-        type: ADD_MEMO,
-        titile,
-        text
-    };
-};
-
 export const addMemoMenuOnTouch = (val) => {
     if(val == ADD_MEMO_MENU_SAVE){
         return {
@@ -57,3 +51,30 @@ export const addMemoMenuOnTouch = (val) => {
         type:val
     };
 };
+
+export const addMemoTitleChange = (title) => {
+    return {
+        type:ADD_MEMO_TITLE_CHANGE,
+        title
+    };
+};
+
+export const addMemoContentChange = (content) => {
+    return {
+        type:ADD_MEMO_CONTENT_CHANGE,
+        content
+    };
+};
+
+export const addMemo = (data) => {
+    return {
+        type: ADD_MEMO,
+        title:data.title,
+        content:data.content,
+        uuid:data.uuid,
+        tags:data.tags,
+        usrId:data.usrId,
+        processing:true
+    };
+};
+
