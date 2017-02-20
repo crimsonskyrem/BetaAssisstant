@@ -115,7 +115,7 @@ const handleItem = (item = initialItem,action) => {
 const handleItemChange = (state) => {
     let tmpItem = state.data.filter(v => v.uuid === state.editUuid)[0] || initialItem;
     console.log(tmpItem); //need to be deleted
-    if(state.addTitle === '')return state;
+    if(state.addTitle === '' && state.addContent === '')return state;
     tmpItem = Object.assign({},tmpItem,{
         uuid:state.editUuid,
         title:state.addTitle,
