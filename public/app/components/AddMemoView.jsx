@@ -3,7 +3,7 @@ import {Card,CardText,Chip,IconMenu,MenuItem,TextField,SelectField,FlatButton,Ra
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ActionEject from 'material-ui/svg-icons/action/eject';
 import v4 from 'uuid/v4';
-import {MEMO,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG} from '../actions';
+import {MEMO,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG,ADD_MEMO_MENU_CLEAR} from '../actions';
 
 const styles = {
     tag:{
@@ -36,7 +36,7 @@ const styles = {
 
 class AddMemoView extends Component{
     newTag(){
-        const {addMenuValue,addTags} = this.props;
+        const {addMenuValue,addTags,storeTags,onAddMemoTagsAdd} = this.props;
         return (<div style={{padding:'10px 20px 0 20px'}}>
             {addMenuValue == ADD_MEMO_MENU_SELECT_TAG ?
                 <SelectField
@@ -44,21 +44,29 @@ class AddMemoView extends Component{
                     floatingLabelText="选择您的标签"
                     fullWidth={true}
                     >
-                    {addTags.length === 0?
+                    {storeTags.length === 0?
                      <MenuItem value={null} primaryText="请手动添加标签" />:
-                     addTags.map(v =>
-                         <MenuItem value={v} primaryText={v} />)
+                     storeTags.map((v,i) =>
+                         <MenuItem value={v}
+                                   key={`menuitem${i}`}
+                                   onClick={() => onAddMemoTagsAdd(v)}
+                                   primaryText={v} />)
                     }
                 </SelectField>:null}
             {addMenuValue == ADD_MEMO_MENU_INPUT_TAG ?
                 <div>
                     <TextField
-                        style={{float:'left',width:'78%'}}
+                        style={{float:'left',width:'78%',marginTop:'20px'}}
+                        ref="inputTag"
                         hintText="输入新的标签"
                         fullWidth={true}
                     />
                     <IconButton
-                        style={{marginLeft:'5px',float:'right'}}
+                        style={{margin:'10px -15px 0 0',float:'right'}}
+                        onClick={()=> {
+                            onAddMemoTagsAdd(this.refs.inputTag.input.value);
+                            this.refs.inputTag.input.value = '';
+                        }}
                     >
                         <ActionEject />
                     </IconButton>
@@ -66,19 +74,21 @@ class AddMemoView extends Component{
         </div>);
     }
     renderChip(label,key){
+        const {onAddMemoTagsDel} = this.props;
         return <Chip
                     key={key}
                     style={styles.chipItem}
-                    onRequestDelete={()=> alert('test')}
+                    onRequestDelete={()=> onAddMemoTagsDel(label)}
                     >
                     {label}
                </Chip>
     }
     render(){
         const {expanded,view,usrId} = this.props;
-        const {addTitle,addContent,addTags,addMenuValue} = this.props;
-        const {addMemoMenuOnTouch,onAddMemoTitleChange,onAddMemoContentChange} = this.props;
+        const {addTitle,addContent,addMenuValue,addTags,editUuid} = this.props;
+        const {onAddClick,addMemoMenuOnTouch,onAddMemoTitleChange,onAddMemoContentChange,updateEditUuid} = this.props;
         const addMemoExpand = (view == MEMO && expanded);
+        if(editUuid =='') updateEditUuid(v4());
         return (
             <Card expanded={addMemoExpand} >
                 <CardText expandable={true}>
@@ -95,7 +105,10 @@ class AddMemoView extends Component{
                             >
                             <MenuItem value={ADD_MEMO_MENU_SELECT_TAG} primaryText="添加新标签" />
                             <MenuItem value={ADD_MEMO_MENU_INPUT_TAG} primaryText="手动输入标签" />
-                            <MenuItem value={ADD_MEMO_MENU_SAVE} primaryText="保存备忘" />
+                            <MenuItem value={ADD_MEMO_MENU_CLEAR} primaryText="清除内容" />
+                            <MenuItem value={ADD_MEMO_MENU_SAVE}
+                                      onClick={()=> onAddClick(true)}
+                                      primaryText="保存备忘" />
                         </IconMenu>
                         {this.newTag()}
                     </div>

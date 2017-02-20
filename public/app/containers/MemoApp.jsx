@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
-import {fetchMemos,addMemoMenuOnTouch,addMemoTitleChange,addMemoContentChange} from '../actions';
+import {fetchMemos,addMemoMenuOnTouch,addMemoTitleChange,addMemoContentChange,updateEditUuid,
+        addMemoTagsAdd,addMemoTagsDel,
+        } from '../actions';
 import MemoView from '../components/MemoView';
 import AddMemoView from '../components/AddMemoView';
 
@@ -24,11 +26,13 @@ class MemoApp extends Component{
         dispatch(fetchMemos(usrId));
     }
     render(){
-        const {data,show,loading,fail} = this.props;
+        const {data,show,loading,fail,onAddClick} = this.props;
         const empty = ((data.length === 0) && show);
         return (
             <div style={styles.list}>
-                <AddMemoView {...this.props} />
+                <AddMemoView {...this.props}
+                             {...onAddClick}
+                />
                 {loading?<CircularProgress size={120} thickness={5} style={styles.wait} />:''}
                 {empty?<EmptyView />:null}
                 {fail?<FailView />:null}
@@ -47,7 +51,9 @@ const mapStateToProps = (state) => {
         addTitle:state.memoReducer.addTitle,
         addContent:state.memoReducer.addContent,
         addTags:state.memoReducer.addTags,
+        storeTags:state.memoReducer.storeTags,
         addMenuValue:state.memoReducer.addMenuValue,
+        editUuid:state.memoReducer.editUuid,
         deleteOpen:state.memoReducer.deleteOpen,
         deleteObjectId:state.memoReducer.deleteObjectId
     };
@@ -56,12 +62,18 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch:dispatch,
+        updateEditUuid:(uuid) =>
+            dispatch(updateEditUuid(uuid)),
         addMemoMenuOnTouch:(e,child) =>
             dispatch(addMemoMenuOnTouch(child.props.value)),
         onAddMemoTitleChange:(e,title) =>
             dispatch(addMemoTitleChange(title)),
         onAddMemoContentChange:(e,content) =>
-            dispatch(addMemoContentChange(content))
+            dispatch(addMemoContentChange(content)),
+        onAddMemoTagsAdd:(tag) =>
+            dispatch(addMemoTagsAdd(tag)),
+        onAddMemoTagsDel:(tag) =>
+            dispatch(addMemoTagsDel(tag))
     }
 }
 
