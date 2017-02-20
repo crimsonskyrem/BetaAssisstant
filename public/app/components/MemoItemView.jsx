@@ -22,7 +22,9 @@ class MemoItemView extends Component{
         let itemTags = [];
         if(value.tags !== undefined && value.tags !== '')
             itemTags = value.tags.split(',');
-        let subtitle = value.content.substr(0,20) + '...';
+        let subtitle = value.content.length > 26 ?
+                       value.content.substr(0,26) + '...':
+                       value.content;
         return (
                 <Card style={styles.card}>
                     <CardHeader
