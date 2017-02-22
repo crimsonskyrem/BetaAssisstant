@@ -4,8 +4,13 @@ import MemoItemView from './MemoItemView';
 
 class MemoView extends Component{
     render(){
-        const {data} = this.props;
-        const list = data.map((item,i) => <MemoItemView key={i} value={item} />);
+        const {data,onEditMemo,onAddClick} = this.props;
+        const list = data.map((item,i) => <MemoItemView
+                                              key={i}
+                                              value={item}
+                                              onAddClick={onAddClick}
+                                              onEditMemo={onEditMemo}
+                                          />);
         return(
             <div>
                 {list}

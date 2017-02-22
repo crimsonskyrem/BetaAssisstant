@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
 import {fetchMemos,addMemoMenuOnTouch,addMemoTitleChange,addMemoContentChange,updateEditUuid,
-        addMemoTagsAdd,addMemoTagsDel,
+        addMemoTagsAdd,addMemoTagsDel,editMemo,
         } from '../actions';
 import MemoView from '../components/MemoView';
 import AddMemoView from '../components/AddMemoView';
@@ -26,7 +26,8 @@ class MemoApp extends Component{
         dispatch(fetchMemos(usrId));
     }
     render(){
-        const {data,show,loading,fail,onAddClick} = this.props;
+        const {data,show,loading,fail} = this.props;
+        const {onAddClick,onEditMemo} = this.props;
         const empty = ((data.length === 0) && show);
         return (
             <div style={styles.list}>
@@ -36,7 +37,11 @@ class MemoApp extends Component{
                 {loading?<CircularProgress size={120} thickness={5} style={styles.wait} />:''}
                 {empty?<EmptyView />:null}
                 {fail?<FailView />:null}
-                {show?<MemoView data={data}/>:null}
+                {show?<MemoView
+                          data={data}
+                          onAddClick={onAddClick}
+                          onEditMemo={onEditMemo}
+                      />:null}
             </div>
         );
     }
@@ -55,6 +60,7 @@ const mapStateToProps = (state) => {
         addMenuValue:state.memoReducer.addMenuValue,
         editUuid:state.memoReducer.editUuid,
         deleteOpen:state.memoReducer.deleteOpen,
+        deleteCache:state.memoReducer.deleteCache,
         deleteObjectId:state.memoReducer.deleteObjectId
     };
 };
@@ -73,7 +79,9 @@ const mapDispatchToProps = (dispatch) => {
         onAddMemoTagsAdd:(tag) =>
             dispatch(addMemoTagsAdd(tag)),
         onAddMemoTagsDel:(tag) =>
-            dispatch(addMemoTagsDel(tag))
+            dispatch(addMemoTagsDel(tag)),
+        onEditMemo:(uuid) =>
+            dispatch(editMemo(uuid))
     }
 }
 

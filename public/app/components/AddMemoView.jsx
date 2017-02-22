@@ -102,6 +102,8 @@ class AddMemoView extends Component{
                             style={styles.menu}
                             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                             onItemTouchTap={addMemoMenuOnTouch}
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
                             >
                             <MenuItem value={ADD_MEMO_MENU_SELECT_TAG} primaryText="添加新标签" />
                             <MenuItem value={ADD_MEMO_MENU_INPUT_TAG} primaryText="手动输入标签" />

@@ -1,6 +1,6 @@
 import { GET_MEMOS,RECEIVED_MEMOS,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG,
          ADD_MEMO_TITLE_CHANGE,ADD_MEMO_CONTENT_CHANGE,ADD_MEMO_MENU_CLEAR,ADD_MEMO_UPDATE_EDIT_UUID,
-         ADD_MEMO_MENU_TAG_ADD,ADD_MEMO_MENU_TAG_DEL,
+         ADD_MEMO_MENU_TAG_ADD,ADD_MEMO_MENU_TAG_DEL,EDIT_MEMO,
        } from '../actions';
 
 const defaultState = {
@@ -15,6 +15,7 @@ const defaultState = {
     addMenuValue:'',
     editUuid:'',
     deleteOpen:false,
+    deleteCache:false,
     deleteObjectId:''
 };
 
@@ -136,6 +137,22 @@ const handleItemChange = (state) => {
     });
 };
 
+const handleEditItem = (state,action) => {
+    if(state.addTitle == '' && state.addContent == ''){
+        let item = state.data.filter(v => v.uuid == action.uuid)[0];
+        console.log(item);
+        return Object.assign({},state,{
+            editUuid:item.uuid,
+            addTitle:item.addTitle,
+            addContent:item.addContent,
+            addTags:item.addTags||[]
+        });
+    }else{
+        console.log('unable to edit');
+        return state;
+    }
+};
+
 const memoReducer = (state = initialState, action) => {
     switch (action.type) {
     case GET_MEMOS:
@@ -150,6 +167,8 @@ const memoReducer = (state = initialState, action) => {
     case ADD_MEMO_MENU_TAG_ADD:
     case ADD_MEMO_MENU_TAG_DEL:
         return handleState(state,action);
+    case EDIT_MEMO:
+        return handleEditItem(state,action);
     case ADD_MEMO_MENU_SAVE:
         return handleItemChange(state);
     default:
