@@ -114,8 +114,8 @@ const handleItem = (item = initialItem,action) => {
 };
 
 const handleItemChange = (state) => {
-    let tmpItem = state.data.filter(v => v.uuid === state.editUuid)[0] || initialItem;
-    console.log(tmpItem); //need to be deleted
+    let tmpItem = state.data.filter(v => v.uuid == state.editUuid)[0] || initialItem;
+    let tmpData = state.data.filter(v => v.uuid != state.editUuid);
     if(state.addTitle === '' && state.addContent === '')return state;
     tmpItem = Object.assign({},tmpItem,{
         uuid:state.editUuid,
@@ -132,7 +132,7 @@ const handleItemChange = (state) => {
         editUuid:'',
         data:[
             tmpItem,
-            ...state.data
+            ...tmpData
         ]
     });
 };
@@ -140,12 +140,11 @@ const handleItemChange = (state) => {
 const handleEditItem = (state,action) => {
     if(state.addTitle == '' && state.addContent == ''){
         let item = state.data.filter(v => v.uuid == action.uuid)[0];
-        console.log(item);
         return Object.assign({},state,{
             editUuid:item.uuid,
-            addTitle:item.addTitle,
-            addContent:item.addContent,
-            addTags:item.addTags||[]
+            addTitle:item.title,
+            addContent:item.content,
+            addTags:item.tags||[]
         });
     }else{
         console.log('unable to edit');
