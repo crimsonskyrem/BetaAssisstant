@@ -1,6 +1,7 @@
 import { GET_MEMOS,RECEIVED_MEMOS,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG,
          ADD_MEMO_TITLE_CHANGE,ADD_MEMO_CONTENT_CHANGE,ADD_MEMO_MENU_CLEAR,ADD_MEMO_UPDATE_EDIT_UUID,
-         ADD_MEMO_MENU_TAG_ADD,ADD_MEMO_MENU_TAG_DEL,EDIT_MEMO,
+         ADD_MEMO_MENU_TAG_ADD,ADD_MEMO_MENU_TAG_DEL,EDIT_MEMO,TOGGLE_DIALOG_VIEW,ADD_MEMO_CONFIRM_DELETE_CACHE,
+         DELETE_MEMO,
        } from '../actions';
 
 const defaultState = {
@@ -14,6 +15,7 @@ const defaultState = {
     storeTags:[],
     addMenuValue:'',
     editUuid:'',
+    cacheUuid:'',
     deleteOpen:false,
     deleteCache:false,
     deleteObjectId:''
@@ -96,6 +98,16 @@ const handleState = (state = initialState, action) => {
         return Object.assign({},state,{
             editUuid:action.uuid
         });
+    case TOGGLE_DIALOG_VIEW:
+        return Object.assign({},state,{
+            deleteOpen:false,
+            deleteCache:false
+        });
+    case DELETE_MEMO:
+        return Object.assign({},state,{
+            deleteOpen:true,
+            deleteObjectId:action.objectId
+        });
     case GET_MEMOS:
     default:
         return state;
@@ -124,11 +136,13 @@ const handleItemChange = (state) => {
         tags:state.addTags,
         processiong:true
     });
+    console.log(tmpItem); //need to be deleted
     localStorage.removeItem('memoAddState');
     return Object.assign({},state,{
         addTitle:'',
         addContent:'',
         addTags:[],
+        cacheUuid:'',
         editUuid:'',
         data:[
             tmpItem,
@@ -138,17 +152,27 @@ const handleItemChange = (state) => {
 };
 
 const handleEditItem = (state,action) => {
+    let item = state.data.filter(v => v.uuid == action.uuid)[0];
+    let newState = Object.assign({},state,{
+        cacheUuid:'',
+        editUuid:item.uuid,
+        addTitle:item.title ||'',
+        addContent:item.content ||'',
+        addTags:item.tags||[],
+        deleteOpen:false
+    });
+    if(action.type == ADD_MEMO_CONFIRM_DELETE_CACHE ){
+        localStorage.removeItem('memoAddState');
+        return newState;
+    }
     if(state.addTitle == '' && state.addContent == ''){
-        let item = state.data.filter(v => v.uuid == action.uuid)[0];
-        return Object.assign({},state,{
-            editUuid:item.uuid,
-            addTitle:item.title,
-            addContent:item.content,
-            addTags:item.tags||[]
-        });
+        return newState;
     }else{
-        console.log('unable to edit');
-        return state;
+        return Object.assign({},state,{
+            cacheUuid:action.uuid,
+            deleteCache:true,
+            deleteOpen:true
+        });
     }
 };
 
@@ -165,8 +189,11 @@ const memoReducer = (state = initialState, action) => {
     case ADD_MEMO_UPDATE_EDIT_UUID:
     case ADD_MEMO_MENU_TAG_ADD:
     case ADD_MEMO_MENU_TAG_DEL:
+    case TOGGLE_DIALOG_VIEW:
+    case DELETE_MEMO:
         return handleState(state,action);
     case EDIT_MEMO:
+    case ADD_MEMO_CONFIRM_DELETE_CACHE:
         return handleEditItem(state,action);
     case ADD_MEMO_MENU_SAVE:
         return handleItemChange(state);

@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
 import {fetchMemos,addMemoMenuOnTouch,addMemoTitleChange,addMemoContentChange,updateEditUuid,
-        addMemoTagsAdd,addMemoTagsDel,editMemo,
+        addMemoTagsAdd,addMemoTagsDel,editMemo,toggleDialogView,addMemoConfirmDeleteCache,
+        deleteMemo,
         } from '../actions';
 import MemoView from '../components/MemoView';
 import AddMemoView from '../components/AddMemoView';
@@ -26,22 +27,50 @@ class MemoApp extends Component{
         dispatch(fetchMemos(usrId));
     }
     render(){
-        const {data,show,loading,fail} = this.props;
-        const {onAddClick,onEditMemo} = this.props;
+        const {data,show,loading,fail,deleteOpen,deleteCache,cacheUuid,deleteObjectId} = this.props;
+        const {onAddClick,onEditMemo,onToggleDeleteView,onConfirmDeleteMemo,onConfirmDeleteCache,onDeleteMemo} = this.props;
         const empty = ((data.length === 0) && show);
+        const actions = [
+            <FlatButton
+                label="取消"
+                primary={true}
+                onTouchTap={()=> onToggleDeleteView()}
+            />,
+            <FlatButton
+                label="删除"
+                primary={true}
+                onTouchTap={()=> {
+                        if(deleteCache){
+                            onConfirmDeleteCache(cacheUuid);
+                        }else{
+                            onConfirmDeleteMemo(deleteObjectId);
+                        }
+                    }}
+            />,
+            ];
         return (
             <div style={styles.list}>
                 <AddMemoView {...this.props}
                              {...onAddClick}
                 />
-                {loading?<CircularProgress size={120} thickness={5} style={styles.wait} />:''}
-                {empty?<EmptyView />:null}
-                {fail?<FailView />:null}
-                {show?<MemoView
+                {loading && <CircularProgress size={120} thickness={5} style={styles.wait} />}
+                {empty && <EmptyView />}
+                {fail && <FailView />}
+                {show && <MemoView
                           data={data}
                           onAddClick={onAddClick}
                           onEditMemo={onEditMemo}
-                      />:null}
+                          onDeleteMemo={onDeleteMemo}
+                      />}
+                <Dialog
+                        actions={actions}
+                        modal={false}
+                        open={deleteOpen}
+                        onRequestClose={()=> onToggleDeleteView()}
+                        >
+                        {deleteCache?'添加备忘录中还有未保存的数据，要清空并编辑当前备忘吗？':
+                        '确定要删除吗？'}
+                </Dialog>
             </div>
         );
     }
@@ -59,6 +88,7 @@ const mapStateToProps = (state) => {
         storeTags:state.memoReducer.storeTags,
         addMenuValue:state.memoReducer.addMenuValue,
         editUuid:state.memoReducer.editUuid,
+        cacheUuid:state.memoReducer.cacheUuid,
         deleteOpen:state.memoReducer.deleteOpen,
         deleteCache:state.memoReducer.deleteCache,
         deleteObjectId:state.memoReducer.deleteObjectId
@@ -81,7 +111,15 @@ const mapDispatchToProps = (dispatch) => {
         onAddMemoTagsDel:(tag) =>
             dispatch(addMemoTagsDel(tag)),
         onEditMemo:(uuid) =>
-            dispatch(editMemo(uuid))
+            dispatch(editMemo(uuid)),
+        onToggleDeleteView:() =>
+            dispatch(toggleDialogView()),
+        onConfirmDeleteCache:(uuid) =>
+            dispatch(addMemoConfirmDeleteCache(uuid)),
+        onDeleteMemo:(uuid) =>
+            dispatch(deleteMemo(uuid)),
+        onConfirmDeleteMemo:(uuid) =>
+            dispatch()
     }
 }
 

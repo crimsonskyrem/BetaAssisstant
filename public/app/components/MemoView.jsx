@@ -10,6 +10,7 @@ class MemoView extends Component{
                                               value={item}
                                               onAddClick={onAddClick}
                                               onEditMemo={onEditMemo}
+                                              onDeleteMemo={onDeleteMemo}
                                           />);
         return(
             <div>

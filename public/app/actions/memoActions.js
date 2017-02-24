@@ -1,11 +1,13 @@
 import {basic,getFromUsrId} from './restApi';
-import { FETCH_FAILED,fetchFailed } from './index';
+import { FETCH_FAILED,fetchFailed,toggleDialogView } from './index';
 
 export const MEMO = 'MEMO';
 export const GET_MEMOS = 'GET_MEMOS';
 export const RECEIVED_MEMOS = 'RECEIVED_MEMOS';
 export const ADD_MEMO = 'ADD_MEMO';
 export const EDIT_MEMO = 'EDIT_MEMO';
+export const DELETE_MEMO = 'DELETE_MEMO';
+export const CONFIRM_DELETE_MEMO = 'CONFIRM_DELETE_MEMO';
 export const ADD_MEMO_MENU_SAVE = 'ADD_MEMO_MENU_SAVE';
 export const ADD_MEMO_MENU_SELECT_TAG = 'ADD_MEMO_MENU_SELECT_TAG';
 export const ADD_MEMO_MENU_INPUT_TAG = 'ADD_MEMO_MENU_INPUT_TAG';
@@ -15,6 +17,7 @@ export const ADD_MEMO_MENU_CLEAR = 'ADD_MEMO_MENU_CLEAR';
 export const ADD_MEMO_TITLE_CHANGE = 'ADD_MEMO_TITLE_CHANGE';
 export const ADD_MEMO_CONTENT_CHANGE = 'ADD_MEMO_CONTENT_CHANGE';
 export const ADD_MEMO_UPDATE_EDIT_UUID = 'ADD_MEMO_UPDATE_EDIT_UUID';
+export const ADD_MEMO_CONFIRM_DELETE_CACHE = 'ADD_MEMO_CONFIRM_DELETE_CACHE';
 
 export const fetchMemos = (usrId) => {
     return dispatch => {
@@ -108,9 +111,29 @@ export const addMemo = (data) => {
 };
 
 export const editMemo = (uuid) => {
-    console.log('editing memo',uuid);
     return {
         type: EDIT_MEMO,
         uuid
+    };
+};
+
+export const addMemoConfirmDeleteCache = (uuid) => {
+    return {
+        type: ADD_MEMO_CONFIRM_DELETE_CACHE,
+        uuid
+    };
+};
+
+export const deleteMemo = (objectId) => {
+    return {
+        type: DELETE_MEMO,
+        objectId
+    };
+};
+
+export const confirmDeleteMemo = (objectId) => {
+    return {
+        type: CONFIRM_DELETE_MEMO,
+        objectId
     };
 };

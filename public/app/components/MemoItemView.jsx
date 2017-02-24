@@ -29,11 +29,14 @@ class MemoItemView extends Component{
         return `【${label}】`
     }
     render(){
-        const {value,onEditMemo,onAddClick} = this.props;
+        const {value,onEditMemo,onAddClick,onDeleteMemo} = this.props;
         let itemTags = [];
         if(value.tags !== undefined && value.tags !== '')
-            if(value.tags.length>0)
-            itemTags = value.tags.split(',');
+            if(Array.isArray(value.tags)){
+                itemTags = value.tags
+            }else{
+                itemTags = value.tags.split(',');
+            }
         let subtitle = value.content.length > 26 ?
                        value.content.substr(0,26) + '...':
                        value.content;
@@ -61,7 +64,13 @@ class MemoItemView extends Component{
                                 />
                             </div>
                             <div style={styles.half}>
-                            <RaisedButton fullWidth={true} icon={<ActionDelete />} />
+                                <RaisedButton
+                                    fullWidth={true}
+                                    icon={<ActionDelete />}
+                                    onTouchTap={()=>{
+                                           onDeleteMemo(value.uuid);
+                                        }}
+                                />
                             </div>
                         </div>
                     </CardText>

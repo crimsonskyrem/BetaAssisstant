@@ -1,5 +1,5 @@
 import {basic,getFromUsrId} from './restApi';
-import { FETCH_FAILED,fetchFailed } from './index';
+import { FETCH_FAILED,fetchFailed,toggleDialogView } from './index';
 
 export const TODO = 'TODO';
 export const GET_TODOS = 'GET_TODOS';
@@ -7,7 +7,6 @@ export const RECEIVED_TODOS = 'RECEIVED_TODOS';
 export const ADD_BUTTON_CLICK = 'ADD_BUTTON_CLICK';
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
-export const TOGGLE_DIALOG_VIEW = 'TOGGLE_DIALOG_VIEW';
 export const DELETE_TODO = 'DELETE_TODO';
 export const ADD_TODO_SUCC = 'ADD_TODO_SUCC';
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL';
@@ -159,13 +158,6 @@ export const confirmDeleteTodo = (objectId) => {
 export const deleteTodoState = () => {
     return {
         type: DELETE_TODO
-    };
-};
-
-export const toggleDialogView = (uuid) => {
-    return {
-        type: TOGGLE_DIALOG_VIEW,
-        uuid
     };
 };
 
