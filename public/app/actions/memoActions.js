@@ -4,7 +4,8 @@ import { FETCH_FAILED,fetchFailed,toggleDialogView } from './index';
 export const MEMO = 'MEMO';
 export const GET_MEMOS = 'GET_MEMOS';
 export const RECEIVED_MEMOS = 'RECEIVED_MEMOS';
-export const ADD_MEMO = 'ADD_MEMO';
+export const ADD_MEMO_SUCC = 'ADD_MEMO_SUCC';
+export const ADD_MEMO_FAIL = 'ADD_MEMO_FAIL';
 export const EDIT_MEMO = 'EDIT_MEMO';
 export const DELETE_MEMO = 'DELETE_MEMO';
 export const CONFIRM_DELETE_MEMO = 'CONFIRM_DELETE_MEMO';
@@ -54,12 +55,55 @@ export const receivedMemos = (data) => {
 
 export const addMemoMenuOnTouch = (val) => {
     if(val == ADD_MEMO_MENU_SAVE){
-        return {
-            type:ADD_MEMO_MENU_SAVE
+        return dispatch => {
+            dispatch(addMemoMenuSave());
+            const savedState = JSON.parse(localStorage.getItem('memoAddState')) ;
+            const agent = basic();
+            const data = {
+                title:savedState.addTitle,
+                content:savedState.addContent,
+                uuid:savedState.editUuid,
+                tags:savedState.addTags
+            };
+            return agent.post('memoList?fetchWhenSave=true',data).then(
+                response => {
+                    dispatch(addMemoSucc(response.data));
+                    localStorage.removeItem('memoAddState');
+                }
+            ).catch(
+                err => {
+                    console.log(err);
+                    dispatch(addMemoFail(data));
+                }
+            );
         };
     }
     return {
         type:val
+    };
+};
+
+export const addMemoMenuSave = () => {
+    return {
+        type:ADD_MEMO_MENU_SAVE
+    };
+};
+
+export const addMemoSucc = (data) => {
+    console.log(data);
+    return {
+        type: ADD_MEMO_SUCC,
+        objectId: data.objectId
+    };
+};
+
+export const addMemoFail = (data) => {
+    return {
+        type: ADD_MEMO_FAIL,
+        uuid:data.uuid,
+        addTitle:data.title,
+        addContent:data.content,
+        addTags:data.tags
     };
 };
 
@@ -98,17 +142,6 @@ export const addMemoTagsDel = (tag) => {
     };
 };
 
-export const addMemo = (data) => {
-    return {
-        type: ADD_MEMO,
-        title:data.title,
-        content:data.content,
-        uuid:data.uuid,
-        tags:data.tags,
-        usrId:data.usrId,
-        processing:true
-    };
-};
 
 export const editMemo = (uuid) => {
     return {

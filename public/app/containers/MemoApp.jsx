@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {CircularProgress,Dialog,FlatButton} from 'material-ui';
 import {fetchMemos,addMemoMenuOnTouch,addMemoTitleChange,addMemoContentChange,updateEditUuid,
         addMemoTagsAdd,addMemoTagsDel,editMemo,toggleDialogView,addMemoConfirmDeleteCache,
-        deleteMemo,
+        deleteMemo,confirmDeleteMemo,
         } from '../actions';
 import MemoView from '../components/MemoView';
 import AddMemoView from '../components/AddMemoView';
@@ -116,10 +116,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch(toggleDialogView()),
         onConfirmDeleteCache:(uuid) =>
             dispatch(addMemoConfirmDeleteCache(uuid)),
-        onDeleteMemo:(uuid) =>
-            dispatch(deleteMemo(uuid)),
-        onConfirmDeleteMemo:(uuid) =>
-            dispatch()
+        onDeleteMemo:(objectId) =>
+            dispatch(deleteMemo(objectId)),
+        onConfirmDeleteMemo:(objectId) =>
+            dispatch(confirmDeleteMemo(objectId))
     }
 }
 

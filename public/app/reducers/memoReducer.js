@@ -1,7 +1,7 @@
 import { GET_MEMOS,RECEIVED_MEMOS,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG,
          ADD_MEMO_TITLE_CHANGE,ADD_MEMO_CONTENT_CHANGE,ADD_MEMO_MENU_CLEAR,ADD_MEMO_UPDATE_EDIT_UUID,
          ADD_MEMO_MENU_TAG_ADD,ADD_MEMO_MENU_TAG_DEL,EDIT_MEMO,TOGGLE_DIALOG_VIEW,ADD_MEMO_CONFIRM_DELETE_CACHE,
-         DELETE_MEMO,
+         DELETE_MEMO,CONFIRM_DELETE_MEMO,ADD_MEMO_FAIL,
        } from '../actions';
 
 const defaultState = {
@@ -24,6 +24,7 @@ const defaultState = {
 const savedState = JSON.parse(localStorage.getItem('memoAddState')) || defaultState;
 
 const initialState =  Object.assign({},defaultState,{
+    editUuid:savedState.editUuid,
     addTitle:savedState.addTitle,
     addTags:savedState.addTags,
     addContent:savedState.addContent
@@ -108,20 +109,35 @@ const handleState = (state = initialState, action) => {
             deleteOpen:true,
             deleteObjectId:action.objectId
         });
+    case CONFIRM_DELETE_MEMO:
+        console.log(action.objectId);
+        return Object.assign({},state,{
+            data:state.data.filter(v => v.objectId != action.objectId),
+            deleteOpen:false
+        });
+    case ADD_MEMO_FAIL:
+        const updateState = Object.assign({},state,{
+            editUuid:action.uuid,
+            addTitle:action.addTitle,
+            addContent:action.addContent,
+            addTags:action.addTags
+        });
+        localStorage.setItem('memoAddState', JSON.stringify(updateState));
+        return Object.assign({},updateState,{
+            data:state.data.map(v => {
+                if(v.uuid == action.uuid){
+                    return Object.assign({},v,{
+                        tags:['添加失败'],
+                        processing:false
+                    });
+                }else{
+                    return v;
+                }
+            })
+        });
     case GET_MEMOS:
     default:
         return state;
-    }
-};
-
-const handleItem = (item = initialItem,action) => {
-    switch(action.type){
-    case RECEIVED_MEMOS:
-        return Object.assign({},item,{
-            processing:false
-        });
-    default:
-        return item;
     }
 };
 
@@ -134,10 +150,8 @@ const handleItemChange = (state) => {
         title:state.addTitle,
         content:state.addContent,
         tags:state.addTags,
-        processiong:true
+        processing:true
     });
-    console.log(tmpItem); //need to be deleted
-    localStorage.removeItem('memoAddState');
     return Object.assign({},state,{
         addTitle:'',
         addContent:'',
@@ -191,6 +205,8 @@ const memoReducer = (state = initialState, action) => {
     case ADD_MEMO_MENU_TAG_DEL:
     case TOGGLE_DIALOG_VIEW:
     case DELETE_MEMO:
+    case CONFIRM_DELETE_MEMO:
+    case ADD_MEMO_FAIL:
         return handleState(state,action);
     case EDIT_MEMO:
     case ADD_MEMO_CONFIRM_DELETE_CACHE:

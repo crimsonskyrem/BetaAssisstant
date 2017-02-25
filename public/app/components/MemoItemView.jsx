@@ -40,6 +40,7 @@ class MemoItemView extends Component{
         let subtitle = value.content.length > 26 ?
                        value.content.substr(0,26) + '...':
                        value.content;
+        let opacity = value.processing ? '0.5': '1';
         return (
                 <Card style={styles.card}>
                     <CardHeader
@@ -49,6 +50,7 @@ class MemoItemView extends Component{
                          )}
                         actAsExpander={true}
                         showExpandableButton={true}
+                        style={{opacity:opacity}}
                     />
                     <CardText expandable={true}>
                         {value.content}
@@ -68,7 +70,7 @@ class MemoItemView extends Component{
                                     fullWidth={true}
                                     icon={<ActionDelete />}
                                     onTouchTap={()=>{
-                                           onDeleteMemo(value.uuid);
+                                           onDeleteMemo(value.objectId);
                                         }}
                                 />
                             </div>
