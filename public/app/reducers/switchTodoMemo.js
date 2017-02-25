@@ -1,7 +1,7 @@
 import {TODO,MEMO,SWITCH_TODO_MEMO,ADD_BUTTON_CLICK} from '../actions';
 
 const initialState ={
-    view:MEMO,
+    view:TODO,
     addExpanded:false
 };
 
