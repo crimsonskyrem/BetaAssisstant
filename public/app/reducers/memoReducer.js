@@ -1,7 +1,7 @@
 import { GET_MEMOS,RECEIVED_MEMOS,ADD_MEMO_MENU_SAVE,ADD_MEMO_MENU_SELECT_TAG,ADD_MEMO_MENU_INPUT_TAG,
          ADD_MEMO_TITLE_CHANGE,ADD_MEMO_CONTENT_CHANGE,ADD_MEMO_MENU_CLEAR,ADD_MEMO_UPDATE_EDIT_UUID,
          ADD_MEMO_MENU_TAG_ADD,ADD_MEMO_MENU_TAG_DEL,EDIT_MEMO,TOGGLE_DIALOG_VIEW,ADD_MEMO_CONFIRM_DELETE_CACHE,
-         DELETE_MEMO,CONFIRM_DELETE_MEMO,ADD_MEMO_FAIL,
+         DELETE_MEMO,CONFIRM_DELETE_MEMO,ADD_MEMO_FAIL,ADD_MEMO_SUCC,
        } from '../actions';
 
 const defaultState = {
@@ -16,6 +16,7 @@ const defaultState = {
     addMenuValue:'',
     editUuid:'',
     cacheUuid:'',
+    forSaveUsrId:'',
     deleteOpen:false,
     deleteCache:false,
     deleteObjectId:''
@@ -46,7 +47,8 @@ const handleState = (state = initialState, action) => {
             data:action.data.reverse(),
             storeTags:action.storeTags,
             loading:false,
-            show:true
+            show:true,
+            forSaveUsrId:action.usrId
         });
     case ADD_MEMO_MENU_INPUT_TAG:
     case ADD_MEMO_MENU_SELECT_TAG:
@@ -114,6 +116,19 @@ const handleState = (state = initialState, action) => {
         return Object.assign({},state,{
             data:state.data.filter(v => v.objectId != action.objectId),
             deleteOpen:false
+        });
+    case ADD_MEMO_SUCC:
+        return Object.assign({},state,{
+            data:state.data.map(v => {
+                if(v.uuid == action.uuid){
+                    return Object.assign({},v,{
+                        objectId:action.objectId,
+                        processing:false
+                    });
+                }else{
+                    return v;
+                }
+            })
         });
     case ADD_MEMO_FAIL:
         const updateState = Object.assign({},state,{
@@ -207,6 +222,7 @@ const memoReducer = (state = initialState, action) => {
     case DELETE_MEMO:
     case CONFIRM_DELETE_MEMO:
     case ADD_MEMO_FAIL:
+    case ADD_MEMO_SUCC:
         return handleState(state,action);
     case EDIT_MEMO:
     case ADD_MEMO_CONFIRM_DELETE_CACHE:

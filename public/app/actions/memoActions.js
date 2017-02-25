@@ -27,7 +27,7 @@ export const fetchMemos = (usrId) => {
         return memo.get('memoList')
             .then(
                 response => {
-                    dispatch(receivedMemos(response.data.results));
+                    dispatch(receivedMemos(response.data.results,usrId));
                 }
             ).catch(
                 err => dispatch(fetchFailed())
@@ -42,14 +42,15 @@ export const getMemos = (usrId) => {
     };
 };
 
-export const receivedMemos = (data) => {
+export const receivedMemos = (data,usrId) => {
     let tmp = data.map(v => v.tags).join(',').split(',') || [];
     tmp = tmp.filter(v => v.length > 0);
     return {
         type: RECEIVED_MEMOS,
         data: data,
         storeTags:tmp,
-        receivedAt: Date.now()
+        receivedAt: Date.now(),
+        usrId:usrId
     };
 };
 
@@ -60,11 +61,13 @@ export const addMemoMenuOnTouch = (val) => {
             const savedState = JSON.parse(localStorage.getItem('memoAddState')) ;
             const agent = basic();
             const data = {
+                usrId:savedState.forSaveUsrId,
                 title:savedState.addTitle,
                 content:savedState.addContent,
                 uuid:savedState.editUuid,
-                tags:savedState.addTags
+                tags:savedState.addTags.join(',')
             };
+            console.log(savedState);
             return agent.post('memoList?fetchWhenSave=true',data).then(
                 response => {
                     dispatch(addMemoSucc(response.data));
@@ -90,9 +93,9 @@ export const addMemoMenuSave = () => {
 };
 
 export const addMemoSucc = (data) => {
-    console.log(data);
     return {
         type: ADD_MEMO_SUCC,
+        uuid:data.uuid,
         objectId: data.objectId
     };
 };
@@ -165,8 +168,24 @@ export const deleteMemo = (objectId) => {
 };
 
 export const confirmDeleteMemo = (objectId) => {
+    return dispatch => {
+        const agent = basic();
+        return agent.delete(`memoList/${objectId}`).then(
+            response => {
+                dispatch(deleteMemoSucc(objectId));
+            }
+        ).catch(
+            err => {
+                console.log(err);
+                dispatch(toggleDialogView());
+            }
+        );
+    };
+};
+
+export const deleteMemoSucc = (objectId) => {
     return {
         type: CONFIRM_DELETE_MEMO,
         objectId
     };
-};
+}

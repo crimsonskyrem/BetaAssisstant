@@ -89,6 +89,7 @@ const mapStateToProps = (state) => {
         addMenuValue:state.memoReducer.addMenuValue,
         editUuid:state.memoReducer.editUuid,
         cacheUuid:state.memoReducer.cacheUuid,
+        forSaveUsrId:state.memoReducer.forSaveUsrId,
         deleteOpen:state.memoReducer.deleteOpen,
         deleteCache:state.memoReducer.deleteCache,
         deleteObjectId:state.memoReducer.deleteObjectId
