@@ -87,7 +87,7 @@ function commandblk(usr,msg,cb){
             break;
         case 4:
         case 5:
-        let usrurl = "https://sven.leanapp.cn/#/usr/"+usr;
+        var usrurl = "https://sven.leanapp.cn/#/usr/"+usr;
         cb(usrurl);
     }
 }
