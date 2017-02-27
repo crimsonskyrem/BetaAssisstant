@@ -9,7 +9,9 @@
 * 将记录分为简单备忘和记事两个模块
 * 添加Material-UI 
 * 添加React-Redux 
-* 正在编写UI
+* UI已完成，可在微信中查看
 
 ## 相关公众号
 > 贝塔助手  
+![betaAssisstant](./qrcode.jpg)
+> 在线地址 [link](https://sven.leanapp.cn/#/usr/1234567890)
