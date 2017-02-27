@@ -8,6 +8,7 @@ exports.deal = function(usr,content,cb) {
         h or help : 显示此条帮助信息;\n\n\
         c or check : 查询备忘, 例：':c 1';\n\n\
         m or memo : 添加一个备忘,例：':m 备忘内容';\n\n\
+        v or view : 图形界面查看您的备忘，也可直接单击下方链接;\n\n\
         输入命令请使用半角英文，命令与内容之间使用空格连接\n\n\
 	      要查看您的备忘，请单击下面的链接：\n\n"+usrurl;
         cb(reply);
@@ -29,7 +30,7 @@ exports.deal = function(usr,content,cb) {
 function commandblk(usr,msg,cb){
     var content = msg.split(' ');
     var things = msg.substr(msg.indexOf(' '));
-    var keyArray = ['c','check','m','memo'];
+    var keyArray = ['c','check','m','memo','v','view'];
     var keyIndex = keyArray.indexOf(content[0].toLowerCase());
     var reply,id;
     if(keyIndex==-1){
@@ -84,6 +85,10 @@ function commandblk(usr,msg,cb){
                 });
             }
             break;
+        case 4:
+        case 5:
+        let usrurl = "https://sven.leanapp.cn/#/usr/"+usr;
+        cb(usrurl);
     }
 }
 

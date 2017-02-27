@@ -18,8 +18,9 @@ export const fetchFailed= () => {
     };
 };
 
-export const toggleDialogView = () => {
+export const toggleDialogView = (uuid) => {
     return {
-        type: TOGGLE_DIALOG_VIEW
+        type: TOGGLE_DIALOG_VIEW,
+        uuid
     };
 };
